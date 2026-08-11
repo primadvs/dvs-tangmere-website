@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "static-site",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["/tmp/tangmere_serve.py"],
+      "port": 4173
+    }
+  ]
+}

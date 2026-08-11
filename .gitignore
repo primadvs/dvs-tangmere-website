@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+
+# Local tool settings
+.claude/settings.local.json
+
+# Reference material — saved copies of other websites, kept locally for
+# design reference. Not part of the Tangmere site.
+*_files/
+[0-9][0-9][0-9][0-9] *.html
+screencapture-*.png
+website style .pages
+CLAUDEwebdesign copy.md
+
+# Unused/empty placeholder art
+assets/hero-bg.jpg
+assets/hero-tangmere.jpg
+assets/landing page__tangmere .png
