@@ -2,18 +2,38 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Header logo: always return to the very top of the homepage. On the
-// homepage itself a plain #top anchor silently fails, because the
-// anchor target is the sticky header, which browsers treat as already
-// in view and refuse to scroll to.
-const headerBrand = document.querySelector('.site-header .brand');
-if (headerBrand) {
-  const isHomePage = /(^|\/)index\.html$/.test(window.location.pathname) || window.location.pathname === '/' || window.location.pathname.endsWith('/');
-  headerBrand.addEventListener('click', (e) => {
-    if (isHomePage) {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+// A shared link that lands on a section (e.g. a link ending in
+// "#services") arrives with the hash already in the URL. The browser
+// tries to jump there immediately, before the hero video and other
+// content have settled — so it lands wildly off target, often well
+// past the section, near the bottom of the page. Cancel that early
+// jump, then scroll to the real target once the page has actually
+// finished loading.
+if (window.location.hash) {
+  const sharedTargetId = window.location.hash.slice(1);
+  window.scrollTo(0, 0);
+  window.addEventListener('load', () => {
+    const target = document.getElementById(sharedTargetId);
+    if (target) {
+      target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     }
+  });
+}
+
+// Every Tangmere logo (header and footer both) always returns to the
+// very top of the homepage. On the homepage itself a plain #top anchor
+// silently fails, because the anchor target is the sticky header,
+// which browsers treat as already in view and refuse to scroll to.
+const brandLinks = document.querySelectorAll('.brand');
+if (brandLinks.length) {
+  const isHomePage = /(^|\/)index\.html$/.test(window.location.pathname) || window.location.pathname === '/' || window.location.pathname.endsWith('/');
+  brandLinks.forEach((brand) => {
+    brand.addEventListener('click', (e) => {
+      if (isHomePage) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+      }
+    });
   });
 }
 
