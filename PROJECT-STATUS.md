@@ -105,7 +105,7 @@ This is the part that matters most if whoever built this steps away. **Every acc
 
 ### Phase 2 — Set up working email (Weeks 1–2)
 
-- Create 6 real mailboxes: the five pilots named on the About page (James Hughes, Chris Edwards, Will Fanshawe, Pawel Chorzelski, Josh Le Breton), plus a shared `sales@` address.
+- Create 6 real mailboxes: the five employees named on the About page (James Hughes, Chris Edwards, Will Fanshawe, Pawel Chorzelski, Josh Le Breton), plus a shared `sales@` address.
 - Configure the technical settings that stop email landing in spam (these are called MX, SPF, DKIM and DMARC records — Google Workspace will give exact instructions for these when the mailboxes are created).
 - **Wire the actual contact form to these mailboxes.** This is the fix for §3.
 
@@ -123,7 +123,7 @@ Two systems work together, not one replacing the other:
 "UAT" stands for **User Acceptance Testing** — before anyone outside the team sees the new setup, the team itself tests it:
 
 - Every page, every link, every image
-- A real test enquiry, checked by each pilot in their own new mailbox
+- A real test enquiry, checked by each employee in their own new mailbox
 - The WhatsApp button, on both a phone and a computer
 - The hero video is placeholder stock footage, kept deliberately until Tangmere's own is filmed — a confirmed choice, not something to re decide here. The language switcher decision (§8) should be settled before this phase closes.
 
