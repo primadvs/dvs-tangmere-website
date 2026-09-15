@@ -22,7 +22,7 @@ Read in this order:
 1. **§4 — what actually works right now** (and the one big thing that doesn't)
 2. **§6 — where every account lives** (so you can actually get in)
 3. **§7 — the plan** (confirmed and going ahead, not a proposal under discussion)
-4. **§8 — the four open decisions**, all of which sit with Chris Edwards
+4. **§8 — the three open decisions**, all of which sit with Chris Edwards
 5. **§9 — known issues**, so you don't rediscover them the hard way
 
 Then run the site locally (§5) before touching anything.
@@ -46,7 +46,7 @@ This is documented in detail in §7 and §9. Fixing it is the top priority of th
 | **Hero video, photos, styling** | All working as designed |
 | **Contact form** | **Does not send anywhere** — see §3 |
 | **WhatsApp button** | Works — opens WhatsApp with a pre filled message |
-| **Language switcher** | Visible in the header but does nothing when clicked — no translations exist. Decision pending, see §8. |
+| **Language switcher** | Visible in the header but does nothing when clicked — no translations exist. |
 
 Hosting today is **GitHub Pages**, which is free but can only serve static files — it has no way to run a form backend. That's a hosting limitation, not a bug to fix in the code.
 
@@ -89,7 +89,7 @@ This is the part that matters most if whoever built this steps away. **Every acc
 
 ## 7. The plan (domain, email, migration, testing, rollout)
 
-**This is the confirmed plan Tangmere is going ahead with**, not a draft under discussion. The four items still open are all in §8, and none of them block Phases 1–3. The full version, with a to scale timeline and cost tables, is saved alongside this file at `proposal/launch-plan.html`.
+**This is the confirmed plan Tangmere is going ahead with**, not a draft under discussion. The three items still open are all in §8, and none of them block Phases 1–3. The full version, with a to scale timeline and cost tables, is saved alongside this file at `proposal/launch-plan.html`.
 
 ### Phase 1 — Acquire the `.aero` domain (Week 1)
 
@@ -125,7 +125,7 @@ Two systems work together, not one replacing the other:
 - Every page, every link, every image
 - A real test enquiry, checked by each employee in their own new mailbox
 - The WhatsApp button, on both a phone and a computer
-- The hero video is placeholder stock footage, kept deliberately until Tangmere's own is filmed — a confirmed choice, not something to re decide here. The language switcher decision (§8) should be settled before this phase closes.
+- The hero video is placeholder stock footage, kept deliberately until Tangmere's own is filmed — a confirmed choice, not something to re decide here.
 
 ### Phase 5 — A slow rollout, not a switch flip (Weeks 4–6)
 
@@ -147,14 +147,13 @@ Two systems work together, not one replacing the other:
 
 ## 8. Open decisions — Chris Edwards decides
 
-Everything in §7 is the confirmed plan. These four items are the only things still open, and all four sit with Chris, as the person taking ownership of the site's copy, voice and content. None of them block Phases 1–3; all four can be settled any time before Phase 4 sign off.
+Everything in §7 is the confirmed plan. These three items are the only things still open, and all three sit with Chris, as the person taking ownership of the site's copy, voice and content. None of them block Phases 1–3; all three can be settled any time before Phase 4 sign off.
 
 | Decision | The options | Notes |
 |---|---|---|
 | **The "Speak to a Pilot" button** | *Enquire Now* (neutral, covers buying and selling equally) · *Get in Touch* (warmer, less transactional) · *Talk to Us* (personal tone, drops the "pilot" framing) · or keep the original | Part of a broader copy pass — a few phrases across the site read as generic rather than in Tangmere's own voice. That whole pass is Chris's, not just this one button. |
-| **Display font** | Keep **EB Garamond** (free, chosen deliberately to avoid a generic AI website look) · or switch to **Avenir** (Adobe Fonts, ~$20–60/mo) · or a **Hoefler & Co** face (Cloud.typography, from $99/yr — specific face still TBD: Hoefler Text, Mercury, Gotham all differ) | Real cost either way except keeping what's there. |
+| **Display font** | Keep **EB Garamond** (free, chosen deliberately to avoid a generic AI website look) · or switch to **Avenir** (Adobe Fonts, ~$20–60/mo) · or a **Hoefler & Co** face (Cloud.typography, from $99/yr — specific face still TBD: Hoefler Text, Mercury, Gotham all differ) | Real cost either way except keeping what's there. **Discovery and pricing needed** — neither alternative has a confirmed quote yet; the specific face still needs choosing before a real price can be requested. |
 | **File storage** | Google Workspace Business Standard already bundles Drive — 2TB pooled storage per mailbox, shared drives — already in the §7 budget. If something beyond that was meant (a dedicated shared drive structure for contracts and aircraft documentation, say), that's a separate ask worth spelling out. | Needs clarifying, not just confirming. |
-| **Language switcher** | Commission real translations, or remove it | A control that visibly does nothing costs more trust than not having it at all. |
 
 ---
 
@@ -167,7 +166,7 @@ Everything in §7 is the confirmed plan. These four items are the only things st
 | **2014 Bell 429 has no photos** | Shows a placeholder logo instead of the aircraft, since it hasn't arrived into inventory yet. | Fix when it arrives |
 | **2027 Bell 429 photo isn't the real aircraft** | It's Bell's own manufacturer photo, since this is a new build aircraft that doesn't exist yet. Reasonable for now, but not genuinely Tangmere's. | Fix at delivery |
 
-The language switcher, copy tone, and font choice are also open — see §8, where they're written up properly rather than repeated here.
+Copy tone and font choice are also open — see §8, where they're written up properly rather than repeated here.
 
 ---
 
