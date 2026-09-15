@@ -75,10 +75,10 @@ This is the part that matters most if whoever built this steps away. **Every acc
 | **Hosting (current)** | GitHub Pages | Live, free, no login needed beyond GitHub itself |
 | **Hosting (planned)** | Netlify | **Not yet created.** Needed to fix the contact form (§7, Phase 3) |
 | **Current domain** | tangmere-aircraft.com | Existing — registrar and account owner not documented here; confirm and add before this file is trusted as complete |
-| **New domain (planned)** | A `.aero` domain | **Not yet registered.** Requires an "Aero ID" membership first — see §7, Phase 1 |
+| **New domain (planned)** | A `.aero` domain, via **Netim.com** | **Not yet registered.** Requires an "Aero ID" membership first — see §7, Phase 1. Purchased under **Chris Edwards' email**, the designated account holder for this and related acquisitions — not a personal address, so ownership isn't tied to whoever happens to click buy |
 | **Working email today** | sales@tangmere-aircraft.com | Listed as the site's contact address. **Not confirmed as an actively monitored inbox** — check this before relying on it |
-| **Email (planned)** | Microsoft 365, 8 mailboxes on the new domain | **Not yet purchased.** Business Standard with Copilot, ~£144.80/month (annual billing) or £173.76/month (no commitment) — figures confirmed from Microsoft's own pricing page, but reconfirm before buying, as prices change |
-| **Backend (planned)** | Azure (Function + Table Storage + Graph API) | **Not yet built.** See §7, Phase 3 and §9 |
+| **Email (planned)** | Google Workspace, 8 mailboxes on the new domain | **Not yet purchased.** Business Standard, ~$112/month (annual billing) or $134.40/month (no commitment) — figures confirmed from Google's own pricing page in USD; convert to GBP and confirm before buying |
+| **Backend (planned)** | Azure (Function + Table Storage + Gmail API) | **Not yet built.** See §7, Phase 3 and §9 |
 
 ### If you only do one thing from this section
 
@@ -96,15 +96,16 @@ This was worked out in detail in a separate planning document and is reproduced 
 
 - Tangmere qualifies clearly — eligible categories include Business Aircraft Operator, Distribution, and Aviation Professional.
 - The registry's own published turnaround for the membership is **around two working days** once eligibility is confirmed.
-- Once approved, the domain is bought through an accredited `.aero` seller, for up to a 10-year term.
+- Once approved, the domain is bought through **Netim.com**, an accredited `.aero` seller, for up to a 10-year term.
 - **The current tangmere-aircraft.com is untouched throughout** — this runs alongside it with zero risk to the live site.
+- **Chris Edwards' email is the account holder** for this purchase and related acquisitions — not a personal address, so the account isn't tied to whoever happens to click buy.
 
-**One decision this depends on, not yet made:** does the new `.aero` domain *replace* tangmere-aircraft.com, run *alongside* it, or get registered now and *held in reserve* for later? This changes everything in Phase 3 (redirects, what gets announced when) and is worth settling early.
+**One decision this depends on, for Chris Edwards to confirm:** does the new `.aero` domain *replace* tangmere-aircraft.com, run *alongside* it, or get registered now and *held in reserve* for later? The direction discussed — run alongside, with `.aero` used for new customer enquiries specifically — is the lead option, but it's Chris's call as part of owning the site's rollout. This changes everything in Phase 3 (redirects, what gets announced when).
 
 ### Phase 2 — Set up working email (Weeks 1–2)
 
 - Create 8 real mailboxes: the five pilots named on the About page (James Hughes, Chris Edwards, Will Fanshawe, Pawel Chorzelski, Josh Le Breton), a shared `sales@` address, and **two further seats not yet reflected on the site** — confirm who these are before Phase 4.
-- Configure the technical settings that stop email landing in spam (these are called MX, SPF, DKIM and DMARC records — a mailbox provider like Microsoft 365 will give exact instructions for these when the mailboxes are created).
+- Configure the technical settings that stop email landing in spam (these are called MX, SPF, DKIM and DMARC records — Google Workspace will give exact instructions for these when the mailboxes are created).
 - **Wire the actual contact form to these mailboxes.** This is the fix for §3.
 
 ### Phase 3 — Fix the form and plan the migration (Weeks 2–3)
@@ -135,11 +136,11 @@ Two systems are proposed to work together, not one replacing the other:
 
 | Item | Cost | Notes |
 |---|---|---|
-| `.aero` domain | $50–90/year | Varies by seller; indicative, not a quote |
+| `.aero` domain | $50–90/year | Via Netim.com; indicative, not a quote |
 | Aero ID membership | Confirm with SITA | One-time eligibility step |
-| 8 mailboxes (Microsoft 365) | £144.80/mo (annual) or £173.76/mo (monthly) | Confirmed from Microsoft's pricing page |
+| 8 mailboxes (Google Workspace Business Standard) | $112/mo (annual) or $134.40/mo (monthly) | Confirmed from Google's pricing page, in USD — convert to GBP before buying |
 | Netlify hosting | Likely free at this scale | |
-| Azure backend | ~£0/month | Function calls, storage and email-sending all sit inside free usage tiers at Tangmere's enquiry volume |
+| Azure backend | ~$0/month | Function calls, storage and Gmail API calls all sit inside free usage tiers at Tangmere's enquiry volume |
 
 ---
 
@@ -152,7 +153,8 @@ Two systems are proposed to work together, not one replacing the other:
 | **2014 Bell 429 has no photos** | Shows a placeholder logo instead of the aircraft, since it hasn't arrived into inventory yet. | Fix when it arrives |
 | **2027 Bell 429 photo isn't the real aircraft** | It's Bell's own manufacturer photo, since this is a new-build aircraft that doesn't exist yet. Reasonable for now, but not genuinely Tangmere's. | Fix at delivery |
 | **Language switcher does nothing** | Offers English, French, German, Spanish. Selecting one changes nothing on the page. | Needs a decision — see Phase 4 |
-| **Some copy reads as generic/AI-written** | A few phrases across the site (e.g. "not a ticketing system") were flagged in an earlier design review as sounding like a template rather than a person. | Optional polish |
+| **Some copy reads as generic/AI-written** | A few phrases across the site (e.g. "not a ticketing system") were flagged in an earlier design review as sounding like a template rather than a person. Includes the "Speak to a Pilot" button, raised as a possible rewrite ("Enquire Now" / "Get in Touch" / "Talk to Us" among the options). | **Owned by Chris Edwards** — he's taking on the site's copy and voice generally, not just this button |
+| **Display font may change** | Current typeface (EB Garamond) was chosen deliberately to avoid a generic AI-website look, and is free. Avenir and Hoefler & Co faces were raised as alternatives — both are paid (Avenir via Adobe Fonts, ~$20–60/mo; Hoefler & Co via Cloud.typography, from $99/yr), unlike what's live today. | **For Chris Edwards to confirm**, with the cost difference in view |
 
 ---
 
@@ -166,17 +168,17 @@ Customer submits the form
    → Azure Function receives it
    → checks it isn't spam (a simple hidden-field trick called a "honeypot")
    → saves a permanent record (in a lightweight Azure database called "Table Storage")
-   → sends a notification email (via Microsoft's "Graph API", using the same
-     Microsoft 365 mailboxes from Phase 2)
+   → sends a notification email (via the Gmail API, using the same
+     Google Workspace mailboxes from Phase 2)
 ```
 
 The Function will live in its own folder, separate from the website itself, and deployed as its own independent piece — the site's hosting (Netlify) and this backend don't depend on each other.
 
 **Still needed before this can be built and go live:**
-- The Microsoft 365 mailboxes from Phase 2 need to exist first (the Function sends email through them)
+- The Google Workspace mailboxes from Phase 2 need to exist first (the Function sends email through them)
 - An Azure account, and inside it: a "Function App" resource and a "Storage Account" — both require someone to click through Azure's own sign-up
 - A "Table Storage" (this is not the same thing as the Google Cloud Storage question that was also discussed and set aside — see below)
-- An "App Registration" in Microsoft's system, with permission to send email — this step specifically requires an administrator of the Microsoft 365 account to approve it; it can't be done by a script or by Claude Code
+- A Google Cloud service account with domain-wide delegation, with permission to send email as `sales@` — this step specifically requires an administrator of the Google Workspace account to approve it; it can't be done by a script or by Claude Code
 
 ### A related idea that was set aside: Google Cloud Storage
 

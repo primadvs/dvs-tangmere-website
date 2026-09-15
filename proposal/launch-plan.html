@@ -318,11 +318,12 @@
       <article class="phase">
         <div class="phase__when">Days 3&ndash;5</div>
         <div class="phase__body">
-          <div class="phase__title"><h3>Register the domain</h3></div>
+          <div class="phase__title"><h3>Register the domain</h3> <span class="pill pill--ok">Registrar confirmed</span></div>
           <ul>
-            <li>Once the membership ID is issued, purchase through an accredited .aero registrar &mdash; membership doesn't register the name by itself, it unlocks the purchase.</li>
+            <li>Once the membership ID is issued, purchase through <b>Netim.com</b>, an accredited .aero registrar &mdash; membership doesn't register the name by itself, it unlocks the purchase.</li>
             <li>Register for a multi-year term (up to 10 years) to lock in the name early rather than renew annually.</li>
             <li>The current tangmere-aircraft.com stays live and untouched the entire time &mdash; this runs in parallel, with no risk to the working site.</li>
+            <li><b>Chris Edwards' email is the account holder</b> for this purchase and all related acquisitions (the domain, and anything else bought during this rollout) &mdash; not a personal address, so the account isn't tied to whoever happens to click buy.</li>
           </ul>
         </div>
       </article>
@@ -370,11 +371,11 @@
       <article class="phase">
         <div class="phase__when">Decide first</div>
         <div class="phase__body">
-          <div class="phase__title"><h3>How the two domains relate</h3><span class="pill pill--warn">Needs a decision</span></div>
-          <p>Three options, and each changes everything downstream:</p>
+          <div class="phase__title"><h3>How the two domains relate</h3><span class="pill pill--warn">For Chris Edwards to confirm</span></div>
+          <p>Three options, and each changes everything downstream. The lead option below reflects the direction discussed, but it's Chris's call to make final as part of owning the site's rollout:</p>
           <ul>
-            <li><b>Replace</b> &mdash; .aero becomes primary, .com redirects to it.</li>
-            <li><b>Run alongside</b> &mdash; both live, .aero used in new marketing, .com kept for continuity.</li>
+            <li><b>Run alongside, .aero for new enquiries (leaning this way)</b> &mdash; both domains stay live; new customer contact and new enquiries route through .aero, tangmere-aircraft.com keeps its existing traffic and links untouched.</li>
+            <li><b>Full replace</b> &mdash; .aero becomes the one address; tangmere-aircraft.com redirects to it.</li>
             <li><b>Hold in reserve</b> &mdash; .aero registered now to secure the name, activated later.</li>
           </ul>
         </div>
@@ -400,7 +401,7 @@
         <div class="phase__when">Weeks 2&ndash;3, in parallel</div>
         <div class="phase__body">
           <div class="phase__title"><h3>Azure &mdash; the system underneath it</h3><span class="pill pill--warn">Takes longer, does more</span></div>
-          <p>Built alongside, not after: an Azure Function behind <code>/api/enquiry</code> that validates the submission, checks it isn't spam, writes it to Table Storage as a permanent record, then notifies the right mailbox via Graph API. This is what turns "an email was sent" into "an enquiry exists and can be found again."</p>
+          <p>Built alongside, not after: an Azure Function behind <code>/api/enquiry</code> that validates the submission, checks it isn't spam, writes it to Table Storage as a permanent record, then notifies the right mailbox via the Gmail API &mdash; the Google Workspace equivalent of the Microsoft Graph approach, since mailboxes now live in Workspace, not Microsoft 365. This is what turns "an email was sent" into "an enquiry exists and can be found again."</p>
         </div>
       </article>
       <article class="phase">
@@ -482,14 +483,14 @@
         <tbody>
           <tr><td><b>.aero registration</b></td><td class="num">$50&ndash;90 / yr</td><td>Varies by registrar; multi-year terms usually cost less per year</td></tr>
           <tr><td><b>Aero ID membership</b></td><td class="num">Confirm with SITA</td><td>One-time eligibility step ahead of registration</td></tr>
-          <tr><td><b>Mailboxes (&times;8) &mdash; annual</b> <span class="pill pill--ok" style="margin-left:6px">Confirmed</span></td><td class="num">&pound;144.80 / mo</td><td>Microsoft 365 Business Standard with Copilot, billed annually &mdash; &pound;1,737.60/yr. Excludes VAT; confirm Channel Islands billing treatment.</td></tr>
-          <tr><td><b>Mailboxes (&times;8) &mdash; monthly</b> <span class="pill pill--ok" style="margin-left:6px">Confirmed</span></td><td class="num">&pound;173.76 / mo</td><td>Same plan, no annual commitment &mdash; costs more but avoids locking in before Phase 4 proves the setup works</td></tr>
+          <tr><td><b>Mailboxes (&times;8) &mdash; annual</b> <span class="pill pill--ok" style="margin-left:6px">Confirmed</span></td><td class="num">$112.00 / mo</td><td>Google Workspace Business Standard, billed annually &mdash; $1,344/yr. Chosen over Business Starter for the 2TB/user pooled storage and shared drives (useful for contracts and aircraft documentation) and eSignature, without the Enterprise-scale admin tooling of Business Plus.</td></tr>
+          <tr><td><b>Mailboxes (&times;8) &mdash; monthly</b> <span class="pill pill--ok" style="margin-left:6px">Confirmed</span></td><td class="num">$134.40 / mo</td><td>Same plan, no annual commitment &mdash; costs more but avoids locking in before Phase 4 proves the setup works</td></tr>
           <tr><td><b>Hosting (Netlify)</b></td><td class="num">Free tier likely sufficient</td><td>Static hosting, plus the immediate form fix</td></tr>
-          <tr><td><b>Azure (Function + Table Storage + Graph API)</b></td><td class="num">~$0 / mo</td><td>Function executions, storage and Graph API calls all sit inside free tiers at this enquiry volume</td></tr>
+          <tr><td><b>Azure (Function + Table Storage + Gmail API)</b></td><td class="num">~$0 / mo</td><td>Function executions, storage and Gmail API calls all sit inside free tiers at this enquiry volume</td></tr>
         </tbody>
       </table>
     </div>
-    <p style="font-size:.86rem; color:var(--slate)">Mailbox figures are confirmed from Microsoft's own pricing page. Everything else is an indicative market range for planning, not a quote &mdash; confirm exact pricing with the chosen registrar before committing.</p>
+    <p style="font-size:.86rem; color:var(--slate)">Mailbox figures are confirmed from Google's own pricing page, quoted in USD as published &mdash; convert to GBP and confirm any Channel Islands billing treatment at time of purchase, since neither is shown on Google's own page. Everything else is an indicative market range for planning, not a quote &mdash; confirm exact pricing with Netim.com before committing.</p>
 
     <div class="phase" style="grid-template-columns:1fr; border-left-color:var(--slate)">
       <div class="phase__body">
@@ -510,9 +511,51 @@
   </section>
 
   <section>
+    <div class="sec-head">
+      <p class="sec-num">Brand &amp; voice</p>
+      <h2>For Chris Edwards to confirm</h2>
+    </div>
+    <p>Chris is taking ownership of the site's copy and how Tangmere actually wants to sound &mdash; these are options laid out for that review, not decisions made on his behalf.</p>
+
+    <div class="phases">
+      <article class="phase">
+        <div class="phase__when">Copy</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>The "Speak to a Pilot" button</h3></div>
+          <p>Raised for a possible change. Three directions, until Chris picks (or keeps the original):</p>
+          <ul>
+            <li><b>Enquire Now</b> &mdash; neutral, covers buying and selling equally, not just pilots.</li>
+            <li><b>Get in Touch</b> &mdash; warmer, less transactional.</li>
+            <li><b>Talk to Us</b> &mdash; keeps the personal tone without the "pilot" framing.</li>
+          </ul>
+          <p class="phase__note">This sits inside the same broader task already on the known-issues list &mdash; a few phrases across the site read as generic rather than in Tangmere's own voice. That whole pass is Chris's to make, not just this one button.</p>
+        </div>
+      </article>
+      <article class="phase">
+        <div class="phase__when">Typography</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>Avenir or a Hoefler &amp; Co typeface</h3><span class="pill pill--warn">Real cost either way</span></div>
+          <p>Worth flagging plainly before Chris chooses: the current display face (EB Garamond, paired with Inter Tight) was picked deliberately this build to avoid the look of a generic AI-generated site, and it's free via Google Fonts. Both alternatives below are paid, unlike what's live today:</p>
+          <ul>
+            <li><b>Avenir</b> &mdash; licensed through Adobe Fonts, roughly $20&ndash;60/month depending on tier (often already covered if anyone on the team has a Creative Cloud subscription). A geometric sans &mdash; a materially different, more modern direction than the current editorial serif look.</li>
+            <li><b>A Hoefler &amp; Co typeface</b> &mdash; licensed through Cloud.typography, typically from $99/year per family for web use, scaling with traffic. Which specific face (Hoefler Text, Mercury, Gotham, and others all look and cost differently) still needs choosing.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="phase">
+        <div class="phase__when">File storage</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>Google Drive, beyond what Workspace already includes</h3><span class="pill pill--warn">Needs clarifying</span></div>
+          <p>Google Workspace Business Standard already bundles Drive with 2TB pooled storage per mailbox and shared drives &mdash; that's accounted for in the budget above. If something beyond that was meant (a dedicated shared drive structure for contracts and aircraft documentation, say), that's a real but separate ask worth spelling out once Chris has a chance to clarify it.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section>
     <div class="callout">
       <h3>The one thing to settle before this plan can start</h3>
-      <p>Everything above assumes a decision on how .aero and the existing .com relate to each other &mdash; replace, run alongside, or hold in reserve. That single choice determines the redirect strategy, what gets announced when, and how "done" is defined for Phase 5. Worth deciding at the demo itself.</p>
+      <p>How .aero and the existing .com relate to each other. The direction discussed &mdash; run alongside, with .aero used for new customer enquiries specifically &mdash; is reflected as the lead option in Phase 3, but it's Chris's to confirm alongside the brand and voice decisions above. That single choice determines the redirect strategy, what gets announced when, and how "done" is defined for Phase 5.</p>
     </div>
   </section>
 
