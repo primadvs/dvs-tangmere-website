@@ -78,7 +78,7 @@ This is the part that matters most if whoever built this steps away. **Every acc
 | **Current domain** | tangmere-aircraft.com | Existing — registrar and account owner not documented here; confirm and add before this file is trusted as complete |
 | **New domain** | A `.aero` domain, via **Netim.com** | **Not yet registered.** Requires an "Aero ID" membership first — see §7, Phase 1. Purchased under **Chris Edwards' email**, the designated account holder for this and related acquisitions |
 | **Working email today** | sales@tangmere-aircraft.com | Listed as the site's contact address. **Not confirmed as an actively monitored inbox** — check this before relying on it |
-| **Email** | Google Workspace, 6 mailboxes on the new domain | **Not yet purchased.** Business Standard, ~$84/month (annual billing) or $100.80/month (no commitment) — figures confirmed from Google's own pricing page in USD; convert to GBP and confirm before buying |
+| **Email** | Google Workspace, 7 mailboxes on the new domain | **Not yet purchased.** Business Standard, ~$98/month (annual billing) or $117.60/month (no commitment) — figures confirmed from Google's own pricing page in USD; convert to GBP and confirm before buying |
 | **Backend (planned)** | Azure (Function + Table Storage + Gmail API) | **Not yet built.** See §7, Phase 3 and §10 |
 
 ### If you only do one thing from this section
@@ -105,7 +105,7 @@ This is the part that matters most if whoever built this steps away. **Every acc
 
 ### Phase 2 — Set up working email (Weeks 1–2)
 
-- Create 6 real mailboxes: the five employees named on the About page (James Hughes, Chris Edwards, Will Fanshawe, Pawel Chorzelski, Josh Le Breton), plus a shared `sales@` address.
+- Create 7 real mailboxes: the five employees named on the About page (James Hughes, Chris Edwards, Will Fanshawe, Pawel Chorzelski, Josh Le Breton), Craig Lammiman (not yet reflected on the About page), plus a shared `sales@` address.
 - Configure the technical settings that stop email landing in spam (these are called MX, SPF, DKIM and DMARC records — Google Workspace will give exact instructions for these when the mailboxes are created).
 - **Wire the actual contact form to these mailboxes.** This is the fix for §3.
 
@@ -139,7 +139,7 @@ Two systems work together, not one replacing the other:
 |---|---|---|
 | `.aero` domain | $50–90/year | Via Netim.com; indicative, not a quote |
 | Aero ID membership | Confirm with SITA | One time eligibility step |
-| 6 mailboxes (Google Workspace Business Standard) | $84/mo (annual) or $100.80/mo (monthly) | Confirmed from Google's pricing page, in USD — convert to GBP before buying |
+| 7 mailboxes (Google Workspace Business Standard) | $98/mo (annual) or $117.60/mo (monthly) | Confirmed from Google's pricing page, in USD — convert to GBP before buying |
 | Netlify hosting | Likely free at this scale | |
 | Azure backend | ~$0/month | Function calls, storage and Gmail API calls all sit inside free usage tiers at Tangmere's enquiry volume |
 
