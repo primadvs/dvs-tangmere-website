@@ -140,7 +140,7 @@
   .card--warn { border-top: 3px solid var(--warn); }
   .card--stop { border-top: 3px solid var(--stop); }
 
-  /* ---------- timeline (to-scale) ---------- */
+  /* ---------- timeline (to scale) ---------- */
   .tl { display: flex; flex-direction: column; gap: 0; }
   .tl-scale {
     display: grid; grid-template-columns: 190px repeat(6, 1fr);
@@ -300,7 +300,7 @@
           <div class="phase__title"><h3>Register the domain</h3> <span class="pill pill--ok">Registrar confirmed</span></div>
           <ul>
             <li>Once the membership ID is issued, purchase through <b>Netim.com</b>, an accredited .aero registrar.</li>
-            <li>Register for a multi-year term (up to 10 years) to lock in the name early rather than renew annually.</li>
+            <li>Register for a multi year term (up to 10 years) to lock in the name early rather than renew annually.</li>
             <li>The current tangmere-aircraft.com stays live and untouched the entire time &mdash; this runs in parallel, with no risk to the working site.</li>
             <li><b>Chris Edwards' email is the account holder</b> for this purchase and all related acquisitions (the domain, and anything else bought during this rollout).</li>
           </ul>
@@ -323,7 +323,7 @@
           <ul>
             <li>James Hughes &middot; Chris Edwards &middot; Will Fanshawe &middot; Pawel Chorzelski &middot; Josh Le Breton &mdash; the five already named on the site.</li>
             <li>A shared <code>sales@</code> alias that the contact form and WhatsApp handoff both point at.</li>
-            <li><b>Two further seats</b> not yet reflected on the About page &mdash; confirm names before Phase 4, so UAT sign-off can include them.</li>
+            <li><b>Two further seats</b> not yet reflected on the About page &mdash; confirm names before Phase 4, so UAT sign off can include them.</li>
           </ul>
         </div>
       </article>
@@ -351,7 +351,7 @@
         <div class="phase__when">Decide first</div>
         <div class="phase__body">
           <div class="phase__title"><h3>How the two domains relate</h3><span class="pill pill--ok">Decided</span></div>
-          <p><b>Run alongside.</b> Both domains stay live: new customer contact and new enquiries route through .aero, while tangmere-aircraft.com keeps its existing traffic and links exactly as they are. Nothing already in circulation breaks, and the new domain carries the aviation-specific credibility of a `.aero` address from day one.</p>
+          <p><b>Run alongside.</b> Both domains stay live: new customer contact and new enquiries route through .aero, while tangmere-aircraft.com keeps its existing traffic and links exactly as they are. Nothing already in circulation breaks, and the new domain carries the aviation specific credibility of a `.aero` address from day one.</p>
         </div>
       </article>
       <article class="phase">
@@ -359,8 +359,8 @@
         <div class="phase__body">
           <div class="phase__title"><h3>Redirects</h3></div>
           <ul>
-            <li>301 redirects from every current tangmere-aircraft.com page to its new-domain equivalent, so no link anyone has already shared or bookmarked breaks.</li>
-            <li>A written rollback plan: DNS reverted to the current site within minutes if the new one shows a problem after go-live.</li>
+            <li>301 redirects from every current tangmere-aircraft.com page to its new domain equivalent, so no link anyone has already shared or bookmarked breaks.</li>
+            <li>A written rollback plan: DNS reverted to the current site within minutes if the new one shows a problem after go live.</li>
           </ul>
         </div>
       </article>
@@ -368,7 +368,7 @@
         <div class="phase__when">Immediate</div>
         <div class="phase__body">
           <div class="phase__title"><h3>Netlify &mdash; the form works this week</h3><span class="pill pill--ok">Ships fast</span></div>
-          <p>Move hosting off GitHub Pages, which can't run the form at all. Netlify is a same-repository swap: point the existing <code>&lt;form&gt;</code> tag at Netlify's form handling and enquiries email out, no backend to build. This alone closes today's biggest gap &mdash; nobody has to wait on Azure being built before enquiries start arriving.</p>
+          <p>Move hosting off GitHub Pages, which can't run the form at all. Netlify is a same repository swap: point the existing <code>&lt;form&gt;</code> tag at Netlify's form handling and enquiries email out, no backend to build. This alone closes today's biggest gap &mdash; nobody has to wait on Azure being built before enquiries start arriving.</p>
         </div>
       </article>
       <article class="phase">
@@ -385,7 +385,7 @@
           <p>Not a duplicate system &mdash; two systems with different jobs, cheap enough to run together indefinitely:</p>
           <ul>
             <li><b>Azure is the record of truth.</b> Every enquiry lands in Table Storage, categorised by the dropdown, findable later.</li>
-            <li><b>Netlify is the safety net.</b> If the Azure Function is ever down, mid-deploy, or hits an unexpected error, the same form submission still reaches Netlify's handler and still emails a pilot &mdash; nothing depends on one system's uptime.</li>
+            <li><b>Netlify is the safety net.</b> If the Azure Function is ever down, mid deploy, or hits an unexpected error, the same form submission still reaches Netlify's handler and still emails a pilot &mdash; nothing depends on one system's uptime.</li>
             <li>Total added cost of keeping both: effectively &pound;0/month at this volume. The redundancy is close to free, which is the actual argument for running them simultaneously rather than picking one.</li>
           </ul>
         </div>
@@ -404,9 +404,9 @@
         <tbody>
           <tr><td><b>All 11 pages</b></td><td>Every link, every image, no dead ends</td><td>Whole team</td></tr>
           <tr><td><b>Contact form</b></td><td>A real test enquiry reaches the right mailbox</td><td>Each named pilot, testing their own address</td></tr>
-          <tr><td><b>WhatsApp handoff</b></td><td>Pre-filled message opens correctly with the enquirer's details</td><td>One tester, both mobile and desktop</td></tr>
-          <tr><td><b>Cross-device</b></td><td>Mobile and desktop, two browsers minimum</td><td>Whole team, own devices</td></tr>
-          <tr><td><b>Sign-off</b></td><td>Every row above checked before anyone outside the team sees it</td><td>Named owner, TBC</td></tr>
+          <tr><td><b>WhatsApp handoff</b></td><td>Pre filled message opens correctly with the enquirer's details</td><td>One tester, both mobile and desktop</td></tr>
+          <tr><td><b>Cross device</b></td><td>Mobile and desktop, two browsers minimum</td><td>Whole team, own devices</td></tr>
+          <tr><td><b>Sign off</b></td><td>Every row above checked before anyone outside the team sees it</td><td>Named owner, TBC</td></tr>
         </tbody>
       </table>
     </div>
@@ -431,7 +431,7 @@
         <div class="phase__body">
           <div class="phase__title"><h3>Watch, don't wait passively</h3></div>
           <ul>
-            <li>Confirm enquiries are actually arriving in mailboxes, not just showing the on-page confirmation.</li>
+            <li>Confirm enquiries are actually arriving in mailboxes, not just showing the on page confirmation.</li>
             <li>Check for broken links, missing redirects, and that email isn't landing in spam.</li>
           </ul>
         </div>
@@ -455,9 +455,9 @@
       <table>
         <thead><tr><th>Item</th><th class="num">Typical range</th><th>Notes</th></tr></thead>
         <tbody>
-          <tr><td><b>.aero registration</b></td><td class="num">$50&ndash;90 / yr</td><td>Varies by registrar; multi-year terms usually cost less per year</td></tr>
-          <tr><td><b>Aero ID membership</b></td><td class="num">Confirm with SITA</td><td>One-time eligibility step ahead of registration</td></tr>
-          <tr><td><b>Mailboxes (&times;8) &mdash; annual</b> <span class="pill pill--ok" style="margin-left:6px">Confirmed</span></td><td class="num">$112.00 / mo</td><td>Google Workspace Business Standard, billed annually &mdash; $1,344/yr. Chosen over Business Starter for the 2TB/user pooled storage and shared drives (useful for contracts and aircraft documentation) and eSignature, without the Enterprise-scale admin tooling of Business Plus.</td></tr>
+          <tr><td><b>.aero registration</b></td><td class="num">$50&ndash;90 / yr</td><td>Varies by registrar; multi year terms usually cost less per year</td></tr>
+          <tr><td><b>Aero ID membership</b></td><td class="num">Confirm with SITA</td><td>One time eligibility step ahead of registration</td></tr>
+          <tr><td><b>Mailboxes (&times;8) &mdash; annual</b> <span class="pill pill--ok" style="margin-left:6px">Confirmed</span></td><td class="num">$112.00 / mo</td><td>Google Workspace Business Standard, billed annually &mdash; $1,344/yr. Chosen over Business Starter for the 2TB/user pooled storage and shared drives (useful for contracts and aircraft documentation) and eSignature, without the Enterprise scale admin tooling of Business Plus.</td></tr>
           <tr><td><b>Mailboxes (&times;8) &mdash; monthly</b> <span class="pill pill--ok" style="margin-left:6px">Confirmed</span></td><td class="num">$134.40 / mo</td><td>Same plan, no annual commitment &mdash; costs more but avoids locking in before Phase 4 proves the setup works</td></tr>
           <tr><td><b>Hosting (Netlify)</b></td><td class="num">Free tier likely sufficient</td><td>Static hosting, plus the immediate form fix</td></tr>
           <tr><td><b>Azure (Function + Table Storage + Gmail API)</b></td><td class="num">~$0 / mo</td><td>Function executions, storage and Gmail API calls all sit inside free tiers at this enquiry volume</td></tr>
@@ -479,7 +479,7 @@
             </tbody>
           </table>
         </div>
-        <p class="phase__note" style="max-width:none">Worth noting: Netlify (already proposed for hosting in Phase 3) serves the same video for free as part of its own plan. GCS only earns its place here as the fix for the git-bloat problem above, or if media outgrows what a hosting plan's free tier covers &mdash; not as a second hosting bill.</p>
+        <p class="phase__note" style="max-width:none">Worth noting: Netlify (already proposed for hosting in Phase 3) serves the same video for free as part of its own plan. GCS only earns its place here as the fix for the git bloat problem above, or if media outgrows what a hosting plan's free tier covers &mdash; not as a second hosting bill.</p>
       </div>
     </div>
   </section>
@@ -489,7 +489,7 @@
       <p class="sec-num">Open decisions</p>
       <h2>Chris Edwards decides</h2>
     </div>
-    <p>Everything above this point is the plan Tangmere is going with. The four items below are the only things still open &mdash; all of them sit with Chris, as the person taking ownership of the site's copy, voice and content. Nothing here blocks Phases 1&ndash;3; all four can be settled any time before Phase 4 sign-off.</p>
+    <p>Everything above this point is the plan Tangmere is going with. The four items below are the only things still open &mdash; all of them sit with Chris, as the person taking ownership of the site's copy, voice and content. Nothing here blocks Phases 1&ndash;3; all four can be settled any time before Phase 4 sign off.</p>
 
     <div class="phases">
       <article class="phase">
@@ -502,14 +502,14 @@
             <li><b>Get in Touch</b> &mdash; warmer, less transactional.</li>
             <li><b>Talk to Us</b> &mdash; keeps the personal tone without the "pilot" framing.</li>
           </ul>
-          <p class="phase__note">Part of a broader pass already on the known-issues list &mdash; a few phrases across the site read as generic rather than in Tangmere's own voice. That whole pass is Chris's, not just this one button.</p>
+          <p class="phase__note">Part of a broader pass already on the known issues list &mdash; a few phrases across the site read as generic rather than in Tangmere's own voice. That whole pass is Chris's, not just this one button.</p>
         </div>
       </article>
       <article class="phase">
         <div class="phase__when">Typography</div>
         <div class="phase__body">
           <div class="phase__title"><h3>Avenir or a Hoefler &amp; Co typeface</h3><span class="pill pill--warn">Real cost either way</span></div>
-          <p>The current display face (EB Garamond, paired with Inter Tight) was chosen deliberately to avoid the look of a generic AI-generated site, and is free via Google Fonts. Both alternatives are paid, unlike what's live today:</p>
+          <p>The current display face (EB Garamond, paired with Inter Tight) was chosen deliberately to avoid the look of a generic AI generated site, and is free via Google Fonts. Both alternatives are paid, unlike what's live today:</p>
           <ul>
             <li><b>Avenir</b> &mdash; licensed through Adobe Fonts, roughly $20&ndash;60/month depending on tier (often already covered if anyone on the team has a Creative Cloud subscription). A geometric sans &mdash; a materially different, more modern direction than the current editorial serif look.</li>
             <li><b>A Hoefler &amp; Co typeface</b> &mdash; licensed through Cloud.typography, typically from $99/year per family for web use, scaling with traffic. Which specific face (Hoefler Text, Mercury, Gotham, and others all look and cost differently) still needs choosing.</li>
@@ -527,7 +527,7 @@
         <div class="phase__when">Language switcher</div>
         <div class="phase__body">
           <div class="phase__title"><h3>Commission translations, or remove it</h3></div>
-          <p>The header currently offers English, French, German and Spanish, but selecting one changes nothing &mdash; no translated content exists. A control that visibly does nothing costs more trust than not having it at all, so this needs one of the two: commission real translations, or take the switcher out before Phase 4 sign-off.</p>
+          <p>The header currently offers English, French, German and Spanish, but selecting one changes nothing &mdash; no translated content exists. A control that visibly does nothing costs more trust than not having it at all, so this needs one of the two: commission real translations, or take the switcher out before Phase 4 sign off.</p>
         </div>
       </article>
     </div>
