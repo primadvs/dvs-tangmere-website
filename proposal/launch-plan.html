@@ -469,12 +469,12 @@
     <div class="phase" style="grid-template-columns:1fr; border-left-color:var(--slate)">
       <div class="phase__body">
         <div class="phase__title"><h3 style="font-size:1.05rem">Optional: offloading media to Google Cloud Storage</h3><span class="pill pill--ok">Not required to launch</span></div>
-        <p>Today's entire media footprint is <b>32.9&nbsp;MB</b> &mdash; almost all of it the hero video. That's small enough to sit inside GCS's Always Free allowance, but it's also small enough that git tracks it forever: every time the hero video gets swapped, the repository grows by the full file size again, not just the difference. Moving large media out of the repository and into Cloud Storage &mdash; referenced by URL rather than committed &mdash; fixes that permanently.</p>
+        <p>Today's entire media footprint is <b>32.9&nbsp;MB</b> &mdash; almost all of it the placeholder stock hero video. That figure is a snapshot of today's stand-in content, not a stable number: once Tangmere's own footage and photography replace it, the real footprint could land smaller or larger depending on what's actually shot. That's small enough to sit inside GCS's Always Free allowance either way at this scale, but it's also small enough that git tracks it forever: every time the hero video gets swapped, the repository grows by the full file size again, not just the difference. Moving large media out of the repository and into Cloud Storage &mdash; referenced by URL rather than committed &mdash; fixes that permanently, regardless of how the footprint changes later.</p>
         <div class="scroll">
           <table>
             <thead><tr><th>Cost driver</th><th class="num">Typical range</th><th>Notes</th></tr></thead>
             <tbody>
-              <tr><td><b>Storage</b></td><td class="num">$0 / mo</td><td>$0.020/GB-month standard rate; 5 GB/month is Always Free in US regions &mdash; today's 33 MB fits with room for years of growth</td></tr>
+              <tr><td><b>Storage</b></td><td class="num">$0 / mo</td><td>$0.020/GB-month standard rate; 5 GB/month is Always Free in US regions &mdash; today's 33 MB (placeholder content) fits with a lot of room to grow once real footage and photography replace it</td></tr>
               <tr><td><b>Egress (bandwidth)</b></td><td class="num">~$4&ndash;40+ / mo</td><td>$0.12/GB after a free allowance, and this is the real cost driver: it scales with how many visitors load the video, not with how much is stored</td></tr>
             </tbody>
           </table>

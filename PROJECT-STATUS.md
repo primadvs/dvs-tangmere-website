@@ -195,7 +195,7 @@ The Function will live in its own folder, separate from the website itself, and 
 
 ### A related idea that was set aside: Google Cloud Storage
 
-Separately, moving the website's large files (mainly the 32.9 MB hero video) out of the GitHub repository and into a dedicated storage service (Google Cloud Storage) was discussed. This is **not required to launch** — it solves a narrower problem: every time the video file changes, git keeps the old version forever, so the repository slowly grows. Storage cost for Tangmere's current files would be $0/month, comfortably inside a free allowance; the real cost is "egress" (bandwidth for serving the video to visitors), roughly $4–40/month depending on how many people visit. Worth revisiting once the video is replaced with real footage, not before.
+Separately, moving the website's large files (mainly the 32.9 MB hero video) out of the GitHub repository and into a dedicated storage service (Google Cloud Storage) was discussed. This is **not required to launch** — it solves a narrower problem: every time the video file changes, git keeps the old version forever, so the repository slowly grows. The 32.9 MB figure is today's placeholder stock footage, not a stable number — once Tangmere's own footage and photography replace it, the real footprint could end up smaller or larger depending on what's actually shot. Storage cost for Tangmere's current files would be $0/month, comfortably inside a free allowance regardless; the real cost is "egress" (bandwidth for serving the video to visitors), roughly $4–40/month depending on how many people visit. Worth revisiting once the video is replaced with real footage, not before.
 
 ---
 
