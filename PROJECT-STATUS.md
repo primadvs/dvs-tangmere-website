@@ -9,7 +9,7 @@ This file exists so nobody has to reconstruct this project from memory or from a
 
 ## 1. What this is, in plain terms
 
-A website for **Tangmere Aircraft Sales**, a Guernsey based brokerage of working pilots who buy, sell and broker business jets and helicopters. The site is 11 static HTML pages — a homepage, a full fleet listing, an about page, and 8 individual aircraft detail pages — with no server side code today. It was built with Claude Code (Anthropic's AI coding assistant) across several sessions with Dane Shepherd.
+A website for **Tangmere ~~Aircraft~~ Aero Sales**, a Guernsey based brokerage of working pilots who buy, sell and broker business jets and helicopters. The site is 11 static HTML pages — a homepage, a full fleet listing, an about page, and 8 individual aircraft detail pages — with no server side code today. It was built with Claude Code (Anthropic's AI coding assistant) across several sessions with Dane Shepherd.
 
 **The person maintaining this is not a professional software engineer.** This document is written on that assumption — plain language over jargon, and every acronym explained the first time it's used.
 
@@ -101,7 +101,7 @@ This is the part that matters most if whoever built this steps away. **Every acc
 - **The current tangmere-aircraft.com is untouched throughout** — this runs alongside it with zero risk to the live site.
 - **Chris Edwards' email is the account holder** for this purchase and related acquisitions.
 
-**How the two domains relate — decided:** they **run alongside** each other. New customer contact and new enquiries route through `.aero`; tangmere-aircraft.com keeps its existing traffic and links exactly as they are. Nothing already in circulation breaks, and the new domain carries the aviation specific credibility of a `.aero` address from day one.
+**How the two domains relate — decided:** this is a **move to tangmere.aero**, not a permanent split. Both domains run alongside each other during the migration itself, specifically to limit friction and downtime while the switch happens. Once the transition is complete, tangmere.aero is the one home for the site and tangmere-aircraft.com redirects fully to it. Nothing already in circulation breaks at any point, and the new domain ends up carrying the aviation specific credibility of a `.aero` address as Tangmere's single address, not a parallel one.
 
 ### Phase 2 — Set up working email (Weeks 1–2)
 
@@ -131,7 +131,7 @@ Two systems work together, not one replacing the other:
 
 - **Week 4:** share the new setup with a small number of trusted existing contacts first — not a public announcement yet.
 - **Week 5:** watch. Confirm enquiries are actually arriving in mailboxes (not just showing the on screen confirmation), check for broken links, check email isn't landing in spam.
-- **Week 6:** only once Week 5 has gone cleanly — the full cutover, on the `.aero` for new enquiries basis decided in Phase 1. The old address keeps redirecting rather than disappearing.
+- **Week 6:** only once Week 5 has gone cleanly — tangmere.aero becomes Tangmere's one address, and tangmere-aircraft.com switches from running alongside it to redirecting fully to it. The old address keeps working as a redirect rather than disappearing.
 
 ### Budget summary
 
