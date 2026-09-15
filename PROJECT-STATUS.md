@@ -1,6 +1,6 @@
 # Tangmere Website — Project Status
 
-**Last updated:** 2026-09-11
+**Last updated:** 2026-09-15
 **Written for:** anyone picking this project up — including a future version of whoever is reading this now who has forgotten the details.
 
 This file exists so nobody has to reconstruct this project from memory or from a chat history. If you only read one thing in this repository, read this.
@@ -21,8 +21,9 @@ Read in this order:
 
 1. **§4 — what actually works right now** (and the one big thing that doesn't)
 2. **§6 — where every account lives** (so you can actually get in)
-3. **§7 — the plan** (what was decided, in what order, and why)
-4. **§8 — known issues**, so you don't rediscover them the hard way
+3. **§7 — the plan** (confirmed and going ahead, not a proposal under discussion)
+4. **§8 — the four open decisions**, all of which sit with Chris Edwards
+5. **§9 — known issues**, so you don't rediscover them the hard way
 
 Then run the site locally (§5) before touching anything.
 
@@ -32,7 +33,7 @@ Then run the site locally (§5) before touching anything.
 
 > **The contact form on the website does not send anywhere.** It shows a "Thank you" confirmation, but no email is generated and nothing is stored. Anyone using the form today believes their enquiry was sent. It was not.
 
-This is documented in detail in §7 and §8. Fixing it is the top priority of the plan in §7.
+This is documented in detail in §7 and §9. Fixing it is the top priority of the plan in §7.
 
 ---
 
@@ -45,7 +46,7 @@ This is documented in detail in §7 and §8. Fixing it is the top priority of th
 | **Hero video, photos, styling** | All working as designed |
 | **Contact form** | **Does not send anywhere** — see §3 |
 | **WhatsApp button** | Works — opens WhatsApp with a pre-filled message |
-| **Language switcher** | Visible in the header but does nothing when clicked — no translations exist |
+| **Language switcher** | Visible in the header but does nothing when clicked — no translations exist. Decision pending, see §8. |
 
 Hosting today is **GitHub Pages**, which is free but can only serve static files — it has no way to run a form backend. That's a hosting limitation, not a bug to fix in the code.
 
@@ -75,10 +76,10 @@ This is the part that matters most if whoever built this steps away. **Every acc
 | **Hosting (current)** | GitHub Pages | Live, free, no login needed beyond GitHub itself |
 | **Hosting (planned)** | Netlify | **Not yet created.** Needed to fix the contact form (§7, Phase 3) |
 | **Current domain** | tangmere-aircraft.com | Existing — registrar and account owner not documented here; confirm and add before this file is trusted as complete |
-| **New domain (planned)** | A `.aero` domain, via **Netim.com** | **Not yet registered.** Requires an "Aero ID" membership first — see §7, Phase 1. Purchased under **Chris Edwards' email**, the designated account holder for this and related acquisitions — not a personal address, so ownership isn't tied to whoever happens to click buy |
+| **New domain** | A `.aero` domain, via **Netim.com** | **Not yet registered.** Requires an "Aero ID" membership first — see §7, Phase 1. Purchased under **Chris Edwards' email**, the designated account holder for this and related acquisitions — not a personal address, so ownership isn't tied to whoever happens to click buy |
 | **Working email today** | sales@tangmere-aircraft.com | Listed as the site's contact address. **Not confirmed as an actively monitored inbox** — check this before relying on it |
-| **Email (planned)** | Google Workspace, 8 mailboxes on the new domain | **Not yet purchased.** Business Standard, ~$112/month (annual billing) or $134.40/month (no commitment) — figures confirmed from Google's own pricing page in USD; convert to GBP and confirm before buying |
-| **Backend (planned)** | Azure (Function + Table Storage + Gmail API) | **Not yet built.** See §7, Phase 3 and §9 |
+| **Email** | Google Workspace, 8 mailboxes on the new domain | **Not yet purchased.** Business Standard, ~$112/month (annual billing) or $134.40/month (no commitment) — figures confirmed from Google's own pricing page in USD; convert to GBP and confirm before buying |
+| **Backend (planned)** | Azure (Function + Table Storage + Gmail API) | **Not yet built.** See §7, Phase 3 and §10 |
 
 ### If you only do one thing from this section
 
@@ -88,7 +89,7 @@ This is the part that matters most if whoever built this steps away. **Every acc
 
 ## 7. The plan (domain, email, migration, testing, rollout)
 
-This was worked out in detail in a separate planning document and is reproduced here so it isn't lost if that document becomes inaccessible. It is a **draft for discussion**, not a locked commitment — dates are illustrative. The full version, with a to-scale timeline and cost tables, is saved alongside this file at `proposal/launch-plan.html`.
+**This is the confirmed plan Tangmere is going ahead with**, not a draft under discussion. The four items still open are all in §8, and none of them block Phases 1–3. The full version, with a to-scale timeline and cost tables, is saved alongside this file at `proposal/launch-plan.html`.
 
 ### Phase 1 — Acquire the `.aero` domain (Week 1)
 
@@ -100,7 +101,7 @@ This was worked out in detail in a separate planning document and is reproduced 
 - **The current tangmere-aircraft.com is untouched throughout** — this runs alongside it with zero risk to the live site.
 - **Chris Edwards' email is the account holder** for this purchase and related acquisitions — not a personal address, so the account isn't tied to whoever happens to click buy.
 
-**One decision this depends on, for Chris Edwards to confirm:** does the new `.aero` domain *replace* tangmere-aircraft.com, run *alongside* it, or get registered now and *held in reserve* for later? The direction discussed — run alongside, with `.aero` used for new customer enquiries specifically — is the lead option, but it's Chris's call as part of owning the site's rollout. This changes everything in Phase 3 (redirects, what gets announced when).
+**How the two domains relate — decided:** they **run alongside** each other. New customer contact and new enquiries route through `.aero`; tangmere-aircraft.com keeps its existing traffic and links exactly as they are. Nothing already in circulation breaks, and the new domain carries the aviation-specific credibility of a `.aero` address from day one.
 
 ### Phase 2 — Set up working email (Weeks 1–2)
 
@@ -110,11 +111,11 @@ This was worked out in detail in a separate planning document and is reproduced 
 
 ### Phase 3 — Fix the form and plan the migration (Weeks 2–3)
 
-Two systems are proposed to work together, not one replacing the other:
+Two systems work together, not one replacing the other:
 
 - **Netlify (fast fix):** move hosting off GitHub Pages onto Netlify. Netlify can send a form submission straight to an email address with almost no setup — this alone fixes §3 within days, without waiting for anything else.
 - **Azure (the durable version, built in parallel):** a small piece of custom code (an "Azure Function") that receives the form submission, checks it isn't spam, **saves a permanent record of the enquiry**, and then sends the notification email. This is what turns "an email was sent" into "an enquiry exists and can be found again later" — Netlify's version has no memory of a submission once the email is sent.
-- **Why keep both running:** if the Azure side is ever down or mid-update, the same form submission still reaches Netlify and still emails someone — nothing depends on one system's uptime. Combined cost at Tangmere's enquiry volume is close to £0/month, which is the actual reason to run both rather than picking one.
+- **Why keep both running:** if the Azure side is ever down or mid-update, the same form submission still reaches Netlify and still emails someone — nothing depends on one system's uptime. Combined cost at Tangmere's enquiry volume is close to $0/month, which is the actual reason to run both rather than picking one.
 - Also in this phase: redirect every old tangmere-aircraft.com page to its new equivalent so no bookmarked or shared link breaks, and write down a rollback plan (how to point everything back at the current site within minutes if something goes wrong).
 
 ### Phase 4 — Internal testing, i.e. UAT (Weeks 3–4)
@@ -124,13 +125,13 @@ Two systems are proposed to work together, not one replacing the other:
 - Every page, every link, every image
 - A real test enquiry, checked by each pilot in their own new mailbox
 - The WhatsApp button, on both a phone and a computer
-- Two open decisions to close before this phase finishes: what happens to the **language switcher** (commission real translations, or remove it — a control that visibly does nothing costs more trust than not having it), and confirming the **hero video** situation (see §8) hasn't changed.
+- The hero video is placeholder stock footage, kept deliberately until Tangmere's own is filmed — a confirmed choice, not something to re-decide here. The language switcher decision (§8) should be settled before this phase closes.
 
 ### Phase 5 — A slow rollout, not a switch flip (Weeks 4–6)
 
 - **Week 4:** share the new setup with a small number of trusted existing contacts first — not a public announcement yet.
 - **Week 5:** watch. Confirm enquiries are actually arriving in mailboxes (not just showing the on-screen confirmation), check for broken links, check email isn't landing in spam.
-- **Week 6:** only once Week 5 has gone cleanly — the full cutover, in whichever direction Phase 1's domain decision settled on. The old address keeps redirecting rather than disappearing.
+- **Week 6:** only once Week 5 has gone cleanly — the full cutover, on the `.aero`-for-new-enquiries basis decided in Phase 1. The old address keeps redirecting rather than disappearing.
 
 ### Budget summary
 
@@ -144,7 +145,20 @@ Two systems are proposed to work together, not one replacing the other:
 
 ---
 
-## 8. Known issues (the honest list)
+## 8. Open decisions — Chris Edwards decides
+
+Everything in §7 is the confirmed plan. These four items are the only things still open, and all four sit with Chris, as the person taking ownership of the site's copy, voice and content. None of them block Phases 1–3; all four can be settled any time before Phase 4 sign-off.
+
+| Decision | The options | Notes |
+|---|---|---|
+| **The "Speak to a Pilot" button** | *Enquire Now* (neutral, covers buying and selling equally) · *Get in Touch* (warmer, less transactional) · *Talk to Us* (personal tone, drops the "pilot" framing) · or keep the original | Part of a broader copy pass — a few phrases across the site read as generic rather than in Tangmere's own voice. That whole pass is Chris's, not just this one button. |
+| **Display font** | Keep **EB Garamond** (free, chosen deliberately to avoid a generic AI-website look) · or switch to **Avenir** (Adobe Fonts, ~$20–60/mo) · or a **Hoefler & Co** face (Cloud.typography, from $99/yr — specific face still TBD: Hoefler Text, Mercury, Gotham all differ) | Real cost either way except keeping what's there. |
+| **File storage** | Google Workspace Business Standard already bundles Drive — 2TB pooled storage per mailbox, shared drives — already in the §7 budget. If something beyond that was meant (a dedicated shared drive structure for contracts and aircraft documentation, say), that's a separate ask worth spelling out. | Needs clarifying, not just confirming. |
+| **Language switcher** | Commission real translations, or remove it | A control that visibly does nothing costs more trust than not having it at all. |
+
+---
+
+## 9. Known issues (the honest list)
 
 | Issue | Detail | Urgency |
 |---|---|---|
@@ -152,13 +166,12 @@ Two systems are proposed to work together, not one replacing the other:
 | **Hero video is stock footage** | The homepage's background video is free stock footage (from a site called Pexels), not Tangmere's own — it shows a jet that isn't part of the fleet. **This was a deliberate decision, not an oversight** — it stays until Tangmere films its own footage. | On hold, by choice |
 | **2014 Bell 429 has no photos** | Shows a placeholder logo instead of the aircraft, since it hasn't arrived into inventory yet. | Fix when it arrives |
 | **2027 Bell 429 photo isn't the real aircraft** | It's Bell's own manufacturer photo, since this is a new-build aircraft that doesn't exist yet. Reasonable for now, but not genuinely Tangmere's. | Fix at delivery |
-| **Language switcher does nothing** | Offers English, French, German, Spanish. Selecting one changes nothing on the page. | Needs a decision — see Phase 4 |
-| **Some copy reads as generic/AI-written** | A few phrases across the site (e.g. "not a ticketing system") were flagged in an earlier design review as sounding like a template rather than a person. Includes the "Speak to a Pilot" button, raised as a possible rewrite ("Enquire Now" / "Get in Touch" / "Talk to Us" among the options). | **Owned by Chris Edwards** — he's taking on the site's copy and voice generally, not just this button |
-| **Display font may change** | Current typeface (EB Garamond) was chosen deliberately to avoid a generic AI-website look, and is free. Avenir and Hoefler & Co faces were raised as alternatives — both are paid (Avenir via Adobe Fonts, ~$20–60/mo; Hoefler & Co via Cloud.typography, from $99/yr), unlike what's live today. | **For Chris Edwards to confirm**, with the cost difference in view |
+
+The language switcher, copy tone, and font choice are also open — see §8, where they're written up properly rather than repeated here.
 
 ---
 
-## 9. The backend build (in progress, paused)
+## 10. The backend build (in progress, paused)
 
 An Azure Function project was designed but **not yet written or deployed**. The agreed shape:
 
@@ -186,13 +199,13 @@ Separately, moving the website's large files (mainly the 32.9 MB hero video) out
 
 ---
 
-## 10. What's deliberately excluded from this repository
+## 11. What's deliberately excluded from this repository
 
 Some local reference material — saved copies of other companies' websites kept only for design inspiration, design-discussion screenshots, an early style guide document, and a few unused placeholder images — was never part of the live site and is not tracked here. If a file mentioned in an old conversation seems to be missing, that's most likely why.
 
 ---
 
-## 11. How this was built
+## 12. How this was built
 
 This site and this plan were built collaboratively with **Claude Code**, Anthropic's AI coding assistant, across multiple working sessions. Design decisions (typography, layout, copy tone) were made deliberately against a design brief that avoided generic "AI-generated" website patterns — visible in choices like the typeface (EB Garamond, not the more common Fraunces), and italics used only where print convention actually calls for them (named aircraft, standfirsts), not as decoration.
 
@@ -200,6 +213,6 @@ If a future session with Claude Code picks this project back up, this file — a
 
 ---
 
-## 12. A note on this specific copy
+## 13. A note on this specific copy
 
 This copy of the project lives at `~/tangmere.old`, reconstructed on 2026-09-12 after the working copy that previously lived at `~/Desktop/dvs-tangmere-website` went missing between sessions — it could not be found anywhere searchable on disk, and this environment could not inspect the macOS Trash to check whether it was recoverable there. Everything here was rebuilt from two verified-safe sources: the live GitHub repository (`primadvs/dvs-tangmere-website`, which has the full site) and this document plus the proposal file, both reconstructed from content already produced earlier in the same working session. Nothing is believed to be lost, but **it's worth checking Trash yourself** in case the original folder is sitting there and easier to simply restore.
