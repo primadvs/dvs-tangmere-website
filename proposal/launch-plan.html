@@ -299,10 +299,10 @@
         <div class="phase__body">
           <div class="phase__title"><h3>Register the domain</h3> <span class="pill pill--ok">Registrar confirmed</span></div>
           <ul>
-            <li>Once the membership ID is issued, purchase through <b>Netim.com</b>, an accredited .aero registrar &mdash; membership doesn't register the name by itself, it unlocks the purchase.</li>
+            <li>Once the membership ID is issued, purchase through <b>Netim.com</b>, an accredited .aero registrar.</li>
             <li>Register for a multi-year term (up to 10 years) to lock in the name early rather than renew annually.</li>
             <li>The current tangmere-aircraft.com stays live and untouched the entire time &mdash; this runs in parallel, with no risk to the working site.</li>
-            <li><b>Chris Edwards' email is the account holder</b> for this purchase and all related acquisitions (the domain, and anything else bought during this rollout) &mdash; not a personal address, so the account isn't tied to whoever happens to click buy.</li>
+            <li><b>Chris Edwards' email is the account holder</b> for this purchase and all related acquisitions (the domain, and anything else bought during this rollout).</li>
           </ul>
         </div>
       </article>
@@ -375,7 +375,7 @@
         <div class="phase__when">Weeks 2&ndash;3, in parallel</div>
         <div class="phase__body">
           <div class="phase__title"><h3>Azure &mdash; the system underneath it</h3><span class="pill pill--warn">Takes longer, does more</span></div>
-          <p>Built alongside, not after: an Azure Function behind <code>/api/enquiry</code> that validates the submission, checks it isn't spam, writes it to Table Storage as a permanent record, then notifies the right mailbox via the Gmail API &mdash; the Google Workspace equivalent of the Microsoft Graph approach, since mailboxes now live in Workspace, not Microsoft 365. This is what turns "an email was sent" into "an enquiry exists and can be found again."</p>
+          <p>Built alongside, not after: an Azure Function behind <code>/api/enquiry</code> that validates the submission, checks it isn't spam, writes it to Table Storage as a permanent record, then notifies the right mailbox via the Gmail API, using the Google Workspace mailboxes set up in Phase 2. This is what turns "an email was sent" into "an enquiry exists and can be found again."</p>
         </div>
       </article>
       <article class="phase">

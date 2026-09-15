@@ -76,7 +76,7 @@ This is the part that matters most if whoever built this steps away. **Every acc
 | **Hosting (current)** | GitHub Pages | Live, free, no login needed beyond GitHub itself |
 | **Hosting (planned)** | Netlify | **Not yet created.** Needed to fix the contact form (§7, Phase 3) |
 | **Current domain** | tangmere-aircraft.com | Existing — registrar and account owner not documented here; confirm and add before this file is trusted as complete |
-| **New domain** | A `.aero` domain, via **Netim.com** | **Not yet registered.** Requires an "Aero ID" membership first — see §7, Phase 1. Purchased under **Chris Edwards' email**, the designated account holder for this and related acquisitions — not a personal address, so ownership isn't tied to whoever happens to click buy |
+| **New domain** | A `.aero` domain, via **Netim.com** | **Not yet registered.** Requires an "Aero ID" membership first — see §7, Phase 1. Purchased under **Chris Edwards' email**, the designated account holder for this and related acquisitions |
 | **Working email today** | sales@tangmere-aircraft.com | Listed as the site's contact address. **Not confirmed as an actively monitored inbox** — check this before relying on it |
 | **Email** | Google Workspace, 8 mailboxes on the new domain | **Not yet purchased.** Business Standard, ~$112/month (annual billing) or $134.40/month (no commitment) — figures confirmed from Google's own pricing page in USD; convert to GBP and confirm before buying |
 | **Backend (planned)** | Azure (Function + Table Storage + Gmail API) | **Not yet built.** See §7, Phase 3 and §10 |
@@ -99,7 +99,7 @@ This is the part that matters most if whoever built this steps away. **Every acc
 - The registry's own published turnaround for the membership is **around two working days** once eligibility is confirmed.
 - Once approved, the domain is bought through **Netim.com**, an accredited `.aero` seller, for up to a 10-year term.
 - **The current tangmere-aircraft.com is untouched throughout** — this runs alongside it with zero risk to the live site.
-- **Chris Edwards' email is the account holder** for this purchase and related acquisitions — not a personal address, so the account isn't tied to whoever happens to click buy.
+- **Chris Edwards' email is the account holder** for this purchase and related acquisitions.
 
 **How the two domains relate — decided:** they **run alongside** each other. New customer contact and new enquiries route through `.aero`; tangmere-aircraft.com keeps its existing traffic and links exactly as they are. Nothing already in circulation breaks, and the new domain carries the aviation-specific credibility of a `.aero` address from day one.
 
