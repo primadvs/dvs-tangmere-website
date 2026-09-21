@@ -79,7 +79,7 @@ This is the part that matters most if whoever built this steps away. **Every acc
 | **New domain** | `tangmere.aero`, registered through **Netim.com** | **Registered.** $68.49 for year one at checkout, renewing at $89.99 a year. Held under **Chris Edwards' email**, the designated account holder for this and related acquisitions. Registration and renewal stay at Netim. The nameservers now point to Cloudflare (see the DNS row below), so DNS records are no longer edited at Netim |
 | **DNS** | Cloudflare (free plan) | **Active since 2026-09-21.** Nameservers `emely.ns.cloudflare.com` and `rick.ns.cloudflare.com`. Every DNS record (Google Workspace mail records, later the website) is edited here, not at Netim. Confirm which email address holds the Cloudflare account and record it in the password manager |
 | **Working email today** | sales@tangmere-aircraft.com | Listed as the site's contact address. **Not confirmed as an actively monitored inbox** — check this before relying on it |
-| **Email** | Google Workspace, planned 7 mailboxes on `tangmere.aero` | **Signed up, domain verified, mail flowing to Google.** The first administrator mailbox exists. Business Standard was the plan at ~$98/month (annual billing) or $117.60/month (no commitment), in USD from Google's pricing page. Confirm and record here which plan, seat count and billing option was actually chosen at sign up |
+| **Email** | Google Workspace, planned 6 paid mailboxes plus a free `sales@` group on `tangmere.aero` | **Signed up, domain verified, mail flowing to Google.** The first administrator mailbox exists. Business Standard was the plan at ~$84/month for 6 seats (annual billing) or $100.80/month (no commitment), in USD from Google's pricing page. Confirm and record here which plan, seat count and billing option was actually chosen at sign up |
 | **Backend (planned)** | Azure (Function + Table Storage + Gmail API) | **Not yet built.** See §7, Phase 3 and §10 |
 
 ### If you only do one thing from this section
@@ -118,13 +118,13 @@ Done:
 
 Still to do:
 - Confirm DKIM is working, then add the DMARC record (start with `p=none`, about two days after SPF and DKIM are confirmed).
-- Create the remaining mailboxes. Two decisions are open: whether `sales@` is a real paid mailbox (~$14/month) or a free group, and who the second administrator is.
+- Create the remaining mailboxes. **Decided 2026-09-21: `sales@` will be a free Google Group, not a paid mailbox**, with a Shared Drive for shared files. Still open: who the second administrator is, and confirming the seat count chosen at sign up is 6 (it was planned as 7 before this decision).
 - The two A records for `tangmere.aero` and `www` still point at Netim's parking page. They are replaced when the website is connected to Cloudflare Pages.
 - Nothing has been added to the website itself yet, and the contact form still sends nothing.
 
 ### Phase 2 — Set up working email (Weeks 1–2)
 
-- Create 7 real mailboxes: the five employees named on the About page (James Hughes, Chris Edwards, Will Fanshawe, Pawel Chorzelski, Josh Le Breton), Craig Lammiman (not yet reflected on the About page), plus a shared `sales@` address.
+- Create 6 real mailboxes: the five employees named on the About page (James Hughes, Chris Edwards, Will Fanshawe, Pawel Chorzelski, Josh Le Breton) and Craig Lammiman (not yet reflected on the About page). `sales@` is a free Google Group that delivers to the chosen people, so it costs nothing extra. Shared files live in a Google Shared Drive (included in Business Standard). Groups can be set so members reply as `sales@`; that setting needs turning on in the admin console.
 - Configure the technical settings that stop email landing in spam (these are called MX, SPF, DKIM and DMARC records — Google Workspace will give exact instructions for these when the mailboxes are created; they are entered in Cloudflare's DNS once the move above is done).
 - **Wire the actual contact form to these mailboxes.** This is the fix for §3.
 
@@ -177,7 +177,7 @@ The goal: staff open an admin page, edit an aircraft on a form, upload photos an
 |---|---|---|
 | `.aero` domain | $68.49 first year, then $89.99/year | Netim checkout price (confirmed) |
 | Aero ID membership | Confirm with SITA | One time eligibility step |
-| 7 mailboxes (Google Workspace Business Standard) | $98/mo (annual) or $117.60/mo (monthly) | Confirmed from Google's pricing page, in USD — convert to GBP before buying |
+| 6 mailboxes (Google Workspace Business Standard); `sales@` is a free group | $84/mo (annual) or $100.80/mo (monthly) | Confirmed from Google's pricing page, in USD — convert to GBP before buying |
 | Hosting and DNS (Cloudflare Pages) | $0/month | Free plan: unlimited bandwidth, 500 builds a month, 25 MiB per file |
 | Azure backend | ~$0/month | Function calls, storage and Gmail API calls all sit inside free usage tiers at Tangmere's enquiry volume |
 | Fleet editing (Decap CMS, Google sign in) | $0/month | After launch. DecapBridge free plan limits not yet confirmed |
@@ -229,7 +229,7 @@ The Function will live in its own folder, separate from the website itself, and 
 - The Google Workspace mailboxes from Phase 2 need to exist first (the Function sends email through them)
 - An Azure account, and inside it: a "Function App" resource and a "Storage Account" — both require someone to click through Azure's own sign up
 - A "Table Storage" (this is not the same thing as the Google Cloud Storage question that was also discussed and set aside — see below)
-- A Google Cloud service account with domain wide delegation, with permission to send email as `sales@` — this step specifically requires an administrator of the Google Workspace account to approve it; it can't be done by a script or by Claude Code
+- A Google Cloud service account with domain wide delegation, with permission to send the notification email (a group cannot be sent from directly, so it is sent from one real mailbox, for example a website notifications sender, addressed to the `sales@` group, with the enquirer as Reply To) — this step specifically requires an administrator of the Google Workspace account to approve it; it can't be done by a script or by Claude Code
 
 ### A related idea that was set aside: Google Cloud Storage
 
