@@ -297,12 +297,25 @@
       <article class="phase">
         <div class="phase__when">Days 3&ndash;5</div>
         <div class="phase__body">
-          <div class="phase__title"><h3>Register the domain</h3> <span class="pill pill--ok">Registrar confirmed</span></div>
+          <div class="phase__title"><h3>Register the domain</h3> <span class="pill pill--ok">Done</span></div>
           <ul>
-            <li>Once the membership ID is issued, purchase through <b>Netim.com</b>, an accredited .aero registrar.</li>
-            <li>Register for a multi year term (up to 10 years) to lock in the name early rather than renew annually.</li>
+            <li>tangmere.aero is registered through <b>Netim.com</b>, an accredited .aero registrar. At checkout it was $68.49 for the first year, renewing at $89.99 a year.</li>
+            <li>Not needed, so not bought: a separate email hosting plan (Google Workspace is the email host), an SSL certificate and the registrar's CDN add on (the site host provides both). WHOIS privacy is optional; confirm what was chosen.</li>
             <li>The current tangmere-aircraft.com stays live and untouched the entire time &mdash; this runs in parallel, with no risk to the working site.</li>
             <li><b>Chris Edwards' email is the account holder</b> for this purchase and all related acquisitions (the domain, and anything else bought during this rollout).</li>
+          </ul>
+        </div>
+      </article>
+      <article class="phase">
+        <div class="phase__when">Right after registering</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>Move the domain's DNS to Cloudflare</h3><span class="pill pill--warn">Order matters</span></div>
+          <p>Cloudflare Pages can only attach a bare domain like tangmere.aero if the domain's DNS is on Cloudflare, so the nameservers set at Netim change to the two Cloudflare supplies. Until this step they stay on Netim's defaults and nothing on that screen is touched.</p>
+          <ul>
+            <li>Create a free Cloudflare account under Chris Edwards' email and add tangmere.aero. Cloudflare copies the existing DNS records and shows them for checking.</li>
+            <li>Only then, in Netim, choose custom nameservers and enter the two Cloudflare gives.</li>
+            <li>This is the safest moment to do it, before email or the site are live, because nothing can break. It can take up to 48 hours to settle.</li>
+            <li>From here on, every DNS record (the Google Workspace mail records, the site) is entered in Cloudflare, not Netim.</li>
           </ul>
         </div>
       </article>
@@ -332,7 +345,7 @@
         <div class="phase__body">
           <div class="phase__title"><h3>Make mail actually deliver</h3></div>
           <ul>
-            <li>MX records pointed at the chosen mailbox provider.</li>
+            <li>MX records pointed at Google Workspace, entered in Cloudflare's DNS once the move in Phase 1 is done.</li>
             <li>SPF, DKIM and DMARC configured on the new domain &mdash; without these, enquiry replies are likely to land in spam, which quietly defeats the whole point.</li>
             <li><b>Wire the contact form to these mailboxes.</b> This is the fix for today's biggest gap, and it belongs here rather than waiting &mdash; UAT in Phase 4 can't meaningfully test the form until this is done.</li>
           </ul>
@@ -351,7 +364,7 @@
         <div class="phase__when">Decide first</div>
         <div class="phase__body">
           <div class="phase__title"><h3>How the two domains relate</h3><span class="pill pill--ok">Decided</span></div>
-          <p><b>Move to tangmere.aero.</b> Both domains run alongside each other during the migration itself, specifically to limit friction and downtime while the switch happens &mdash; not as a permanent arrangement. Once the transition is complete, tangmere.aero is the one home for the site and tangmere-aircraft.com redirects fully to it. Nothing already in circulation breaks at any point, and the new domain ends up carrying the aviation specific credibility of a `.aero` address as Tangmere's single address, not a parallel one.</p>
+          <p><b>Move to tangmere.aero.</b> Both domains run alongside each other during the migration itself, specifically to limit friction and downtime while the switch happens &mdash; not as a permanent arrangement. Once the transition is complete, tangmere.aero is the one home for the site and tangmere-aircraft.com redirects fully to it. Nothing already in circulation breaks at any point, and the new domain ends up carrying the aviation specific credibility of a .aero address as Tangmere's single address, not a parallel one.</p>
         </div>
       </article>
       <article class="phase">
@@ -365,31 +378,41 @@
         </div>
       </article>
       <article class="phase">
-        <div class="phase__when">Immediate</div>
+        <div class="phase__when">Hosting</div>
         <div class="phase__body">
-          <div class="phase__title"><h3>Netlify &mdash; the form works this week</h3><span class="pill pill--ok">Ships fast</span></div>
-          <p>Move hosting off GitHub Pages, which can't run the form at all. Netlify is a same repository swap: point the existing <code>&lt;form&gt;</code> tag at Netlify's form handling and enquiries email out, no backend to build. This alone closes today's biggest gap &mdash; nobody has to wait on Azure being built before enquiries start arriving.</p>
-        </div>
-      </article>
-      <article class="phase">
-        <div class="phase__when">Weeks 2&ndash;3, in parallel</div>
-        <div class="phase__body">
-          <div class="phase__title"><h3>Azure &mdash; the system underneath it</h3><span class="pill pill--warn">Takes longer, does more</span></div>
-          <p>Built alongside, not after: an Azure Function behind <code>/api/enquiry</code> that validates the submission, checks it isn't spam, writes it to Table Storage as a permanent record, then notifies the right mailbox via the Gmail API, using the Google Workspace mailboxes set up in Phase 2. This is what turns "an email was sent" into "an enquiry exists and can be found again."</p>
-        </div>
-      </article>
-      <article class="phase">
-        <div class="phase__when">Once both are live</div>
-        <div class="phase__body">
-          <div class="phase__title"><h3>Why keep both running</h3></div>
-          <p>Not a duplicate system &mdash; two systems with different jobs, cheap enough to run together indefinitely:</p>
+          <div class="phase__title"><h3>Cloudflare Pages</h3><span class="pill pill--ok">Chosen</span></div>
+          <p>The site moves off GitHub Pages, which has no way to run a form and whose terms say it isn't meant for running an online business. Cloudflare's free plan has unlimited bandwidth, 500 builds a month and needs no card. It builds the site straight from the GitHub repository, so GitHub stays the master copy.</p>
           <ul>
-            <li><b>Azure is the record of truth.</b> Every enquiry lands in Table Storage, categorised by the dropdown, findable later.</li>
-            <li><b>Netlify is the safety net.</b> If the Azure Function is ever down, mid deploy, or hits an unexpected error, the same form submission still reaches Netlify's handler and still emails an employee &mdash; nothing depends on one system's uptime.</li>
-            <li>Total added cost of keeping both: effectively &pound;0/month at this volume. The redundancy is close to free, which is the actual argument for running them simultaneously rather than picking one.</li>
+            <li>The terms don't ban business use. A free site can't collect card details, and Tangmere's site takes none.</li>
+            <li>Free services carry no liability and Cloudflare may suspend an account at any time, so the site can be redeployed to another host within minutes if that ever happens.</li>
+            <li>A single file can be at most 25 MiB. The current 32.9 MB hero video is over that and would not deploy, so the replacement has a size target: 1080p, 10 to 15 seconds, no audio, roughly 3 to 6 MB, with a poster frame taken from the video itself.</li>
+            <li>Cloudflare's CDN terms let it limit customers who serve video or a large share of big files without paid services. A short looping clip of a few MB is unlikely to count, but it is another reason to keep the video small.</li>
           </ul>
+          <p class="phase__note">Netlify was the earlier choice. Its free plan turned out to be 300 credits a month with a hard stop: each publish costs 15 credits, bandwidth costs 20 credits per GB, and running out pauses every site on the account. Its free, ready made form handling is the one thing given up.</p>
         </div>
       </article>
+      <article class="phase">
+        <div class="phase__when">Weeks 2&ndash;3</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>Azure &mdash; how the contact form works</h3><span class="pill pill--warn">Now the only route</span></div>
+          <p>An Azure Function behind <code>/api/enquiry</code> validates the submission, checks it isn't spam, writes it to Table Storage as a permanent record, then notifies the right mailbox via the Gmail API, using the Google Workspace mailboxes set up in Phase 2. This is what turns "an email was sent" into "an enquiry exists and can be found again."</p>
+          <p class="phase__note">Cloudflare Pages has no form handling of its own, so this Function is now the only way enquiries reach a mailbox. Until it is built and tested the contact form still sends nothing, which puts it on the critical path of Phase 3 rather than running alongside a quick fix.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Hosting option</th><th>Cost</th><th>Why, or why not</th></tr></thead>
+        <tbody>
+          <tr><td><b>Cloudflare Pages</b> <span class="pill pill--ok" style="margin-left:6px">Chosen</span></td><td>Free</td><td>Unlimited bandwidth, 500 builds a month, 25 MiB per file.</td></tr>
+          <tr><td><b>Netlify</b></td><td>Free, or $9 to $19 a month</td><td>Free plan is 300 credits a month with a hard stop that pauses every site. Forms are free and unlimited.</td></tr>
+          <tr><td><b>Azure Static Web Apps</b></td><td>Free tier, or about $9 a month</td><td>One source calls the free tier hobby use with no uptime guarantee. Fits the Azure setup already planned.</td></tr>
+          <tr><td><b>GitHub Pages</b></td><td>Free</td><td>Today's host. 100 GB a month soft limit, no forms, and its terms say it isn't meant for running an online business.</td></tr>
+          <tr><td><b>Firebase Hosting</b></td><td>Free</td><td>10 GB a month, and the site is disabled if that is exceeded.</td></tr>
+          <tr><td><b>Vercel</b></td><td>Paid</td><td>Its free plan is for non commercial use only.</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
@@ -448,6 +471,36 @@
 
   <section>
     <div class="sec-head">
+      <p class="sec-num">After launch</p>
+      <h2>Fleet updates by staff</h2>
+    </div>
+    <div class="phases">
+      <article class="phase">
+        <div class="phase__when">The goal</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>Staff update the fleet without an engineer</h3></div>
+          <p>Staff open an admin page, edit an aircraft on a form, upload photos and press Publish. The change is saved to the GitHub repository, Cloudflare rebuilds the pages, and the live site updates within minutes. Cloudflare only hosts the site; the admin page is what staff actually use.</p>
+          <ul>
+            <li><b>Tool:</b> Decap CMS, free and open source, with the site generated from one data file per aircraft (Eleventy suggested).</li>
+            <li><b>Login:</b> Google sign in through DecapBridge, so each person uses the Google Workspace account they already have. No new passwords, no GitHub accounts, and removing someone who leaves is one step. DecapBridge has a free plan; its limits are not yet confirmed.</li>
+            <li><b>Photos:</b> chosen in the aircraft form. Resizing them to web sizes is planned as part of the build so staff can upload phone photos, and any single file must stay under Cloudflare's 25 MiB limit.</li>
+            <li><b>Cost:</b> $0 a month expected.</li>
+          </ul>
+          <p class="phase__note">An engineer is needed once, to rebuild the fleet pages so each aircraft lives in a single place and to set up the admin page. Day to day use needs none. This has not been built or tested yet. The pieces are documented as working together on Cloudflare Pages, but the first real test is the build itself.</p>
+        </div>
+      </article>
+      <article class="phase">
+        <div class="phase__when">Timing</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>After the launch work, not before</h3></div>
+          <p>It depends on the site being hosted on Cloudflare Pages and on Phase 3 being done, so it follows Phase 5 rather than competing with the launch blockers: the contact form, email and the domain move.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
       <p class="sec-num">Budget</p>
       <h2>Indicative costs</h2>
     </div>
@@ -455,16 +508,17 @@
       <table>
         <thead><tr><th>Item</th><th class="num">Typical range</th><th>Notes</th></tr></thead>
         <tbody>
-          <tr><td><b>.aero registration</b></td><td class="num">$50&ndash;90 / yr</td><td>Varies by registrar; multi year terms usually cost less per year</td></tr>
+          <tr><td><b>.aero registration</b> <span class="pill pill--ok" style="margin-left:6px">Confirmed</span></td><td class="num">$68.49 first year</td><td>Netim checkout price; renews at $89.99 a year</td></tr>
           <tr><td><b>Aero ID membership</b></td><td class="num">Confirm with SITA</td><td>One time eligibility step ahead of registration</td></tr>
           <tr><td><b>Mailboxes (&times;7) &mdash; annual</b> <span class="pill pill--ok" style="margin-left:6px">Confirmed</span></td><td class="num">$98.00 / mo</td><td>Google Workspace Business Standard, billed annually &mdash; $1,176/yr. Chosen over Business Starter for the 2TB/user pooled storage and shared drives (useful for contracts and aircraft documentation) and eSignature, without the Enterprise scale admin tooling of Business Plus.</td></tr>
           <tr><td><b>Mailboxes (&times;7) &mdash; monthly</b> <span class="pill pill--ok" style="margin-left:6px">Confirmed</span></td><td class="num">$117.60 / mo</td><td>Same plan, no annual commitment &mdash; costs more but avoids locking in before Phase 4 proves the setup works</td></tr>
-          <tr><td><b>Hosting (Netlify)</b></td><td class="num">Free tier likely sufficient</td><td>Static hosting, plus the immediate form fix</td></tr>
+          <tr><td><b>Hosting and DNS (Cloudflare Pages)</b></td><td class="num">$0 / mo</td><td>Free plan: unlimited bandwidth, 500 builds a month, 25 MiB per file</td></tr>
           <tr><td><b>Azure (Function + Table Storage + Gmail API)</b></td><td class="num">~$0 / mo</td><td>Function executions, storage and Gmail API calls all sit inside free tiers at this enquiry volume</td></tr>
+          <tr><td><b>Fleet editing (Decap CMS, Google sign in)</b></td><td class="num">$0 / mo</td><td>After launch. DecapBridge free plan limits not yet confirmed</td></tr>
         </tbody>
       </table>
     </div>
-    <p style="font-size:.86rem; color:var(--slate)">Mailbox figures are confirmed from Google's own pricing page, quoted in USD as published &mdash; convert to GBP and confirm any Channel Islands billing treatment at time of purchase, since neither is shown on Google's own page. Everything else is an indicative market range for planning, not a quote &mdash; confirm exact pricing with Netim.com before committing.</p>
+    <p style="font-size:.86rem; color:var(--slate)">Mailbox figures are confirmed from Google's own pricing page, quoted in USD as published &mdash; convert to GBP and confirm any Channel Islands billing treatment at time of purchase, since neither is shown on Google's own page. The domain price is what Netim showed at checkout. Everything else is an indicative planning figure, not a quote.</p>
 
     <div class="phase" style="grid-template-columns:1fr; border-left-color:var(--slate)">
       <div class="phase__body">
@@ -479,7 +533,7 @@
             </tbody>
           </table>
         </div>
-        <p class="phase__note" style="max-width:none">Worth noting: Netlify (already proposed for hosting in Phase 3) serves the same video for free as part of its own plan. GCS only earns its place here as the fix for the git bloat problem above, or if media outgrows what a hosting plan's free tier covers &mdash; not as a second hosting bill.</p>
+        <p class="phase__note" style="max-width:none">Worth noting: Cloudflare Pages (chosen for hosting) has no bandwidth cap, but it limits any single file to 25 MiB, so the hero video has to be compressed to roughly 3 to 6 MB to be hosted with the site at all. GCS only earns its place here as the fix for the git bloat problem above, or if media ever outgrows that per file limit &mdash; not as a second hosting bill.</p>
       </div>
     </div>
   </section>

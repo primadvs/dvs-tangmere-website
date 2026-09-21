@@ -1,6 +1,6 @@
 # Tangmere Website — Project Status
 
-**Last updated:** 2026-09-15
+**Last updated:** 2026-09-21
 **Written for:** anyone picking this project up — including a future version of whoever is reading this now who has forgotten the details.
 
 This file exists so nobody has to reconstruct this project from memory or from a chat history. If you only read one thing in this repository, read this.
@@ -48,7 +48,7 @@ This is documented in detail in §7 and §9. Fixing it is the top priority of th
 | **WhatsApp button** | Works — opens WhatsApp with a pre filled message |
 | **Language switcher** | Visible in the header but does nothing when clicked — no translations exist. |
 
-Hosting today is **GitHub Pages**, which is free but can only serve static files — it has no way to run a form backend. That's a hosting limitation, not a bug to fix in the code.
+Hosting today is **GitHub Pages**, which is free but can only serve static files — it has no way to run a form backend. That's a hosting limitation, not a bug to fix in the code. Hosting is planned to move to **Cloudflare Pages** (see §7, Phase 3).
 
 ---
 
@@ -74,9 +74,10 @@ This is the part that matters most if whoever built this steps away. **Every acc
 |---|---|---|
 | **Code repository** | GitHub — `primadvs/dvs-tangmere-website` | Live. Owned by the personal GitHub account `primadvs`. |
 | **Hosting (current)** | GitHub Pages | Live, free, no login needed beyond GitHub itself |
-| **Hosting (planned)** | Netlify | **Not yet created.** Needed to fix the contact form (§7, Phase 3) |
+| **Hosting (planned)** | Cloudflare Pages (free plan) | **Not yet created.** Chosen over Netlify, whose free plan is 300 credits a month with a hard stop. Builds the site from the GitHub repository. See §7, Phase 3 |
 | **Current domain** | tangmere-aircraft.com | Existing — registrar and account owner not documented here; confirm and add before this file is trusted as complete |
-| **New domain** | A `.aero` domain, via **Netim.com** | **Not yet registered.** Requires an "Aero ID" membership first — see §7, Phase 1. Purchased under **Chris Edwards' email**, the designated account holder for this and related acquisitions |
+| **New domain** | `tangmere.aero`, registered through **Netim.com** | **Registered.** $68.49 for year one at checkout, renewing at $89.99 a year. Held under **Chris Edwards' email**, the designated account holder for this and related acquisitions. Nameservers are still on Netim's defaults and must not be changed until the DNS step in §7, Phase 1 |
+| **DNS (planned)** | Cloudflare (free plan) | **Not yet created.** Needed to attach `tangmere.aero` to Cloudflare Pages. Under Chris Edwards' email. Once the domain moves, every DNS record (including the Google Workspace mail records) is entered here, not at Netim |
 | **Working email today** | sales@tangmere-aircraft.com | Listed as the site's contact address. **Not confirmed as an actively monitored inbox** — check this before relying on it |
 | **Email** | Google Workspace, 7 mailboxes on the new domain | **Not yet purchased.** Business Standard, ~$98/month (annual billing) or $117.60/month (no commitment) — figures confirmed from Google's own pricing page in USD; convert to GBP and confirm before buying |
 | **Backend (planned)** | Azure (Function + Table Storage + Gmail API) | **Not yet built.** See §7, Phase 3 and §10 |
@@ -97,26 +98,37 @@ This is the part that matters most if whoever built this steps away. **Every acc
 
 - Tangmere qualifies clearly — eligible categories include Business Aircraft Operator, Distribution, and Aviation Professional.
 - The registry's own published turnaround for the membership is **around two working days** once eligibility is confirmed.
-- Once approved, the domain is bought through **Netim.com**, an accredited `.aero` seller, for up to a 10-year term.
+- The domain is registered through **Netim.com**, an accredited `.aero` seller: $68.49 for year one at checkout, renewing at $89.99 a year. Not needed, so not bought: a separate email hosting plan (Google Workspace hosts the email), an SSL certificate and the registrar's CDN add on (the site host provides both). WHOIS privacy is optional; confirm what was chosen.
 - **The current tangmere-aircraft.com is untouched throughout** — this runs alongside it with zero risk to the live site.
 - **Chris Edwards' email is the account holder** for this purchase and related acquisitions.
+
+**Move the domain's DNS to Cloudflare (right after registering).** Cloudflare Pages can only attach a bare domain like tangmere.aero if the domain's DNS is on Cloudflare. So: create a free Cloudflare account under Chris Edwards' email, add `tangmere.aero` (Cloudflare copies the existing records for checking), and only then change the nameservers at Netim to the two Cloudflare supplies. Do it before email or the site are live, when nothing can break. It can take up to 48 hours to settle. Until then, leave Netim's nameserver screen alone.
 
 **How the two domains relate — decided:** this is a **move to tangmere.aero**, not a permanent split. Both domains run alongside each other during the migration itself, specifically to limit friction and downtime while the switch happens. Once the transition is complete, tangmere.aero is the one home for the site and tangmere-aircraft.com redirects fully to it. Nothing already in circulation breaks at any point, and the new domain ends up carrying the aviation specific credibility of a `.aero` address as Tangmere's single address, not a parallel one.
 
 ### Phase 2 — Set up working email (Weeks 1–2)
 
 - Create 7 real mailboxes: the five employees named on the About page (James Hughes, Chris Edwards, Will Fanshawe, Pawel Chorzelski, Josh Le Breton), Craig Lammiman (not yet reflected on the About page), plus a shared `sales@` address.
-- Configure the technical settings that stop email landing in spam (these are called MX, SPF, DKIM and DMARC records — Google Workspace will give exact instructions for these when the mailboxes are created).
+- Configure the technical settings that stop email landing in spam (these are called MX, SPF, DKIM and DMARC records — Google Workspace will give exact instructions for these when the mailboxes are created; they are entered in Cloudflare's DNS once the move above is done).
 - **Wire the actual contact form to these mailboxes.** This is the fix for §3.
 
 ### Phase 3 — Fix the form and plan the migration (Weeks 2–3)
 
-Two systems work together, not one replacing the other:
-
-- **Netlify (fast fix):** move hosting off GitHub Pages onto Netlify. Netlify can send a form submission straight to an email address with almost no setup — this alone fixes §3 within days, without waiting for anything else.
-- **Azure (the durable version, built in parallel):** a small piece of custom code (an "Azure Function") that receives the form submission, checks it isn't spam, **saves a permanent record of the enquiry**, and then sends the notification email. This is what turns "an email was sent" into "an enquiry exists and can be found again later" — Netlify's version has no memory of a submission once the email is sent.
-- **Why keep both running:** if the Azure side is ever down or mid update, the same form submission still reaches Netlify and still emails someone — nothing depends on one system's uptime. Combined cost at Tangmere's enquiry volume is close to $0/month, which is the actual reason to run both rather than picking one.
+- **Hosting: Cloudflare Pages (chosen).** The site moves off GitHub Pages, which can't run a form and whose terms say it isn't meant for running an online business. Cloudflare's free plan has unlimited bandwidth, 500 builds a month and needs no card, and it builds the site straight from the GitHub repository, so GitHub stays the master copy.
+- **Why not Netlify:** its free plan is 300 credits a month with a hard stop. Each publish costs 15 credits, bandwidth costs 20 credits per GB, and running out pauses every site on the account. The one thing given up is Netlify's free, ready made form handling.
+- **Terms check (read on 2026-09-19):** the terms don't ban business use. A free site can't collect card details, and Tangmere's takes none. Free services carry no liability and Cloudflare may suspend an account at any time, so the site can be redeployed elsewhere within minutes if that happens. Cloudflare's CDN terms let it limit customers who serve video or a large share of big files without paid services; a short looping clip of a few MB is unlikely to count.
+- **File limit:** a single file can be at most 25 MiB. The current 32.9 MB hero video is over that and would not deploy. The replacement has a size target: 1080p, 10 to 15 seconds, no audio, roughly 3 to 6 MB, with a poster frame taken from the video itself.
+- **The contact form runs on Azure.** A small piece of custom code (an "Azure Function") receives the form submission, checks it isn't spam, **saves a permanent record of the enquiry**, and then sends the notification email. This is what turns "an email was sent" into "an enquiry exists and can be found again later". Cloudflare Pages has no form handling of its own, so this is now the only way enquiries reach a mailbox. Until it is built and tested the contact form still sends nothing, which puts it on the critical path of this phase.
 - Also in this phase: redirect every old tangmere-aircraft.com page to its new equivalent so no bookmarked or shared link breaks, and write down a rollback plan (how to point everything back at the current site within minutes if something goes wrong).
+
+| Hosting option | Cost | Why, or why not |
+|---|---|---|
+| **Cloudflare Pages** (chosen) | Free | Unlimited bandwidth, 500 builds a month, 25 MiB per file |
+| Netlify | Free, or $9 to $19 a month | Free plan is 300 credits a month with a hard stop that pauses every site. Forms are free and unlimited |
+| Azure Static Web Apps | Free tier, or about $9 a month | One source calls the free tier hobby use with no uptime guarantee |
+| GitHub Pages (today) | Free | 100 GB a month soft limit, no forms, terms say it isn't meant for running an online business |
+| Firebase Hosting | Free | 10 GB a month, site disabled if exceeded |
+| Vercel | Paid | Its free plan is for non commercial use only |
 
 ### Phase 4 — Internal testing, i.e. UAT (Weeks 3–4)
 
@@ -133,15 +145,26 @@ Two systems work together, not one replacing the other:
 - **Week 5:** watch. Confirm enquiries are actually arriving in mailboxes (not just showing the on screen confirmation), check for broken links, check email isn't landing in spam.
 - **Week 6:** only once Week 5 has gone cleanly — tangmere.aero becomes Tangmere's one address, and tangmere-aircraft.com switches from running alongside it to redirecting fully to it. The old address keeps working as a redirect rather than disappearing.
 
+### After launch — fleet updates by staff
+
+The goal: staff open an admin page, edit an aircraft on a form, upload photos and press Publish. The change is saved to the GitHub repository, Cloudflare rebuilds the pages, and the live site updates within minutes. Cloudflare only hosts the site; the admin page is what staff use.
+
+- **Tool:** Decap CMS (free, open source), with the site generated from one data file per aircraft (Eleventy suggested).
+- **Login:** Google sign in through DecapBridge, so each person uses the Google Workspace account they already have. No new passwords, no GitHub accounts, and removing someone who leaves is one step. DecapBridge has a free plan; its limits are not yet confirmed.
+- **Photos:** chosen in the aircraft form. Resizing to web sizes is planned as part of the build, and any single file must stay under Cloudflare's 25 MiB limit.
+- **Cost:** $0 a month expected.
+- **Not built or tested yet.** An engineer is needed once, to rebuild the fleet pages so each aircraft lives in a single place and to set up the admin page. Day to day use needs none. It follows Phase 5, since it depends on Cloudflare hosting and Phase 3 being done.
+
 ### Budget summary
 
 | Item | Cost | Notes |
 |---|---|---|
-| `.aero` domain | $50–90/year | Via Netim.com; indicative, not a quote |
+| `.aero` domain | $68.49 first year, then $89.99/year | Netim checkout price (confirmed) |
 | Aero ID membership | Confirm with SITA | One time eligibility step |
 | 7 mailboxes (Google Workspace Business Standard) | $98/mo (annual) or $117.60/mo (monthly) | Confirmed from Google's pricing page, in USD — convert to GBP before buying |
-| Netlify hosting | Likely free at this scale | |
+| Hosting and DNS (Cloudflare Pages) | $0/month | Free plan: unlimited bandwidth, 500 builds a month, 25 MiB per file |
 | Azure backend | ~$0/month | Function calls, storage and Gmail API calls all sit inside free usage tiers at Tangmere's enquiry volume |
+| Fleet editing (Decap CMS, Google sign in) | $0/month | After launch. DecapBridge free plan limits not yet confirmed |
 
 ---
 
@@ -184,7 +207,7 @@ Customer submits the form
      Google Workspace mailboxes from Phase 2)
 ```
 
-The Function will live in its own folder, separate from the website itself, and deployed as its own independent piece — the site's hosting (Netlify) and this backend don't depend on each other.
+The Function will live in its own folder, separate from the website itself, and deployed as its own independent piece — the site's hosting (Cloudflare Pages) and this backend don't depend on each other.
 
 **Still needed before this can be built and go live:**
 - The Google Workspace mailboxes from Phase 2 need to exist first (the Function sends email through them)
@@ -194,7 +217,7 @@ The Function will live in its own folder, separate from the website itself, and 
 
 ### A related idea that was set aside: Google Cloud Storage
 
-Separately, moving the website's large files (mainly the 32.9 MB hero video) out of the GitHub repository and into a dedicated storage service (Google Cloud Storage) was discussed. This is **not required to launch** — it solves a narrower problem: every time the video file changes, git keeps the old version forever, so the repository slowly grows. The 32.9 MB figure is today's placeholder stock footage, not a stable number — once Tangmere's own footage and photography replace it, the real footprint could end up smaller or larger depending on what's actually shot. Storage cost for Tangmere's current files would be $0/month, comfortably inside a free allowance regardless; the real cost is "egress" (bandwidth for serving the video to visitors), roughly $4–40/month depending on how many people visit. Worth revisiting once the video is replaced with real footage, not before.
+Separately, moving the website's large files (mainly the 32.9 MB hero video) out of the GitHub repository and into a dedicated storage service (Google Cloud Storage) was discussed. This is **not required to launch** — it solves a narrower problem: every time the video file changes, git keeps the old version forever, so the repository slowly grows. The 32.9 MB figure is today's placeholder stock footage, not a stable number — once Tangmere's own footage and photography replace it, the real footprint could end up smaller or larger depending on what's actually shot. Storage cost for Tangmere's current files would be $0/month, comfortably inside a free allowance regardless; the real cost is "egress" (bandwidth for serving the video to visitors), roughly $4–40/month depending on how many people visit. Cloudflare Pages caps a single file at 25 MiB, so the hero video has to be compressed to fit anyway. Worth revisiting once the video is replaced with real footage, not before.
 
 ---
 
