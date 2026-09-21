@@ -309,7 +309,7 @@
       <article class="phase">
         <div class="phase__when">Right after registering</div>
         <div class="phase__body">
-          <div class="phase__title"><h3>Move the domain's DNS to Cloudflare</h3><span class="pill pill--warn">Order matters</span></div>
+          <div class="phase__title"><h3>Move the domain's DNS to Cloudflare</h3><span class="pill pill--ok">Done</span></div>
           <p>Cloudflare Pages can only attach a bare domain like tangmere.aero if the domain's DNS is on Cloudflare, so the nameservers set at Netim change to the two Cloudflare supplies. Until this step they stay on Netim's defaults and nothing on that screen is touched.</p>
           <ul>
             <li>Create a free Cloudflare account under Chris Edwards' email and add tangmere.aero. Cloudflare copies the existing DNS records and shows them for checking.</li>
@@ -317,6 +317,7 @@
             <li>This is the safest moment to do it, before email or the site are live, because nothing can break. It can take up to 48 hours to settle.</li>
             <li>From here on, every DNS record (the Google Workspace mail records, the site) is entered in Cloudflare, not Netim.</li>
           </ul>
+          <p class="phase__note">Done: Cloudflare is active for tangmere.aero and the public lookup shows its nameservers. Netim's old mail records were removed. The two A records pointing at Netim's parking page remain until the website is connected.</p>
         </div>
       </article>
     </div>
@@ -331,24 +332,26 @@
       <article class="phase">
         <div class="phase__when">Once domain is live</div>
         <div class="phase__body">
-          <div class="phase__title"><h3>Create the real mailboxes</h3></div>
+          <div class="phase__title"><h3>Create the real mailboxes</h3><span class="pill pill--warn">Started</span></div>
           <p>Seven mailboxes total &mdash; one address per person who should actually receive enquiries:</p>
           <ul>
             <li>James Hughes &middot; Chris Edwards &middot; Will Fanshawe &middot; Pawel Chorzelski &middot; Josh Le Breton &mdash; the five already named on the site.</li>
             <li>Craig Lammiman &mdash; not yet reflected on the About page.</li>
             <li>A shared <code>sales@</code> alias that the contact form and WhatsApp handoff both point at.</li>
           </ul>
+          <p class="phase__note">The first administrator mailbox exists. Still to decide: whether <code>sales@</code> is a real paid mailbox (about $14 a month) or a free group that only receives mail, and who the second administrator is.</p>
         </div>
       </article>
       <article class="phase">
         <div class="phase__when">Same window</div>
         <div class="phase__body">
-          <div class="phase__title"><h3>Make mail actually deliver</h3></div>
+          <div class="phase__title"><h3>Make mail actually deliver</h3><span class="pill pill--warn">In progress</span></div>
           <ul>
             <li>MX records pointed at Google Workspace, entered in Cloudflare's DNS once the move in Phase 1 is done.</li>
             <li>SPF, DKIM and DMARC configured on the new domain &mdash; without these, enquiry replies are likely to land in spam, which quietly defeats the whole point.</li>
             <li><b>Wire the contact form to these mailboxes.</b> This is the fix for today's biggest gap, and it belongs here rather than waiting &mdash; UAT in Phase 4 can't meaningfully test the form until this is done.</li>
           </ul>
+          <p class="phase__note">Done so far: the domain is verified with Google, mail goes to Google (one MX record, priority 1), there is one SPF record with Google's value, and the DKIM record is published with authentication started, which can take up to 48 hours. A first test email landed in iCloud's junk folder, which is expected for a new domain before DKIM is active. Still to do: confirm DKIM, add DMARC (starting at p=none, about two days later), and retest.</p>
         </div>
       </article>
     </div>

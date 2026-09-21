@@ -76,10 +76,10 @@ This is the part that matters most if whoever built this steps away. **Every acc
 | **Hosting (current)** | GitHub Pages | Live, free, no login needed beyond GitHub itself |
 | **Hosting (planned)** | Cloudflare Pages (free plan) | **Not yet created.** Chosen over Netlify, whose free plan is 300 credits a month with a hard stop. Builds the site from the GitHub repository. See §7, Phase 3 |
 | **Current domain** | tangmere-aircraft.com | Existing — registrar and account owner not documented here; confirm and add before this file is trusted as complete |
-| **New domain** | `tangmere.aero`, registered through **Netim.com** | **Registered.** $68.49 for year one at checkout, renewing at $89.99 a year. Held under **Chris Edwards' email**, the designated account holder for this and related acquisitions. Nameservers are still on Netim's defaults and must not be changed until the DNS step in §7, Phase 1 |
-| **DNS (planned)** | Cloudflare (free plan) | **Not yet created.** Needed to attach `tangmere.aero` to Cloudflare Pages. Under Chris Edwards' email. Once the domain moves, every DNS record (including the Google Workspace mail records) is entered here, not at Netim |
+| **New domain** | `tangmere.aero`, registered through **Netim.com** | **Registered.** $68.49 for year one at checkout, renewing at $89.99 a year. Held under **Chris Edwards' email**, the designated account holder for this and related acquisitions. Registration and renewal stay at Netim. The nameservers now point to Cloudflare (see the DNS row below), so DNS records are no longer edited at Netim |
+| **DNS** | Cloudflare (free plan) | **Active since 2026-09-21.** Nameservers `emely.ns.cloudflare.com` and `rick.ns.cloudflare.com`. Every DNS record (Google Workspace mail records, later the website) is edited here, not at Netim. Confirm which email address holds the Cloudflare account and record it in the password manager |
 | **Working email today** | sales@tangmere-aircraft.com | Listed as the site's contact address. **Not confirmed as an actively monitored inbox** — check this before relying on it |
-| **Email** | Google Workspace, 7 mailboxes on the new domain | **Not yet purchased.** Business Standard, ~$98/month (annual billing) or $117.60/month (no commitment) — figures confirmed from Google's own pricing page in USD; convert to GBP and confirm before buying |
+| **Email** | Google Workspace, planned 7 mailboxes on `tangmere.aero` | **Signed up, domain verified, mail flowing to Google.** The first administrator mailbox exists. Business Standard was the plan at ~$98/month (annual billing) or $117.60/month (no commitment), in USD from Google's pricing page. Confirm and record here which plan, seat count and billing option was actually chosen at sign up |
 | **Backend (planned)** | Azure (Function + Table Storage + Gmail API) | **Not yet built.** See §7, Phase 3 and §10 |
 
 ### If you only do one thing from this section
@@ -102,9 +102,25 @@ This is the part that matters most if whoever built this steps away. **Every acc
 - **The current tangmere-aircraft.com is untouched throughout** — this runs alongside it with zero risk to the live site.
 - **Chris Edwards' email is the account holder** for this purchase and related acquisitions.
 
-**Move the domain's DNS to Cloudflare (right after registering).** Cloudflare Pages can only attach a bare domain like tangmere.aero if the domain's DNS is on Cloudflare. So: create a free Cloudflare account under Chris Edwards' email, add `tangmere.aero` (Cloudflare copies the existing records for checking), and only then change the nameservers at Netim to the two Cloudflare supplies. Do it before email or the site are live, when nothing can break. It can take up to 48 hours to settle. Until then, leave Netim's nameserver screen alone.
+**Move the domain's DNS to Cloudflare — done.** Cloudflare Pages can only attach a bare domain like tangmere.aero if the domain's DNS is on Cloudflare, so the nameservers at Netim now point to Cloudflare. Cloudflare copied Netim's default records first, and the ones no longer wanted were then removed (see the progress list below).
 
 **How the two domains relate — decided:** this is a **move to tangmere.aero**, not a permanent split. Both domains run alongside each other during the migration itself, specifically to limit friction and downtime while the switch happens. Once the transition is complete, tangmere.aero is the one home for the site and tangmere-aircraft.com redirects fully to it. Nothing already in circulation breaks at any point, and the new domain ends up carrying the aviation specific credibility of a `.aero` address as Tangmere's single address, not a parallel one.
+
+### Progress so far (updated 2026-09-21)
+
+Done:
+- `tangmere.aero` registered at Netim ($68.49 first year, renewing at $89.99).
+- DNS moved to Cloudflare and confirmed active from outside.
+- Google Workspace signed up and the domain verified with a TXT record.
+- Mail records set: one MX record to `smtp.google.com` (priority 1), one SPF record with Google's value, and Netim's old MX and SPF records deleted.
+- DKIM record published and authentication started in Google (can take up to 48 hours).
+- A first test email from the new address landed in iCloud's junk folder. That is expected for a brand new domain before DKIM is active. Retest once Google shows DKIM as working.
+
+Still to do:
+- Confirm DKIM is working, then add the DMARC record (start with `p=none`, about two days after SPF and DKIM are confirmed).
+- Create the remaining mailboxes. Two decisions are open: whether `sales@` is a real paid mailbox (~$14/month) or a free group, and who the second administrator is.
+- The two A records for `tangmere.aero` and `www` still point at Netim's parking page. They are replaced when the website is connected to Cloudflare Pages.
+- Nothing has been added to the website itself yet, and the contact form still sends nothing.
 
 ### Phase 2 — Set up working email (Weeks 1–2)
 
