@@ -116,9 +116,11 @@ Done:
 - DKIM record published and authentication started in Google (can take up to 48 hours).
 - A first test email from the new address landed in iCloud's junk folder. That is expected for a brand new domain before DKIM is active. Retest once Google shows DKIM as working.
 
-Still to do:
+**Paused 2026-09-22, deliberately: email is not being pushed forward right now.** Waiting for Google to finish confirming DKIM (up to 48 hours from when it was published) before doing anything else with mailboxes. Pick back up once DKIM shows as active.
+
+Still to do (once resumed):
 - Confirm DKIM is working, then add the DMARC record (start with `p=none`, about two days after SPF and DKIM are confirmed).
-- Create the remaining mailboxes. **Decided 2026-09-21: `sales@` will be a free Google Group, not a paid mailbox**, with a Shared Drive for shared files. Still open: who the second administrator is, and confirming the seat count chosen at sign up is 6 (it was planned as 7 before this decision).
+- Create the remaining mailboxes. **Decided 2026-09-21: `sales@` will be a free Google Group, not a paid mailbox**, with a Shared Drive for shared files. The group should be private (only invited people can post, or only people inside the organization — not open to the public web), so it does not need to be published anywhere on the site. Still open: who the second administrator is, and confirming the seat count chosen at sign up is 6 (it was planned as 7 before this decision).
 - The two A records for `tangmere.aero` and `www` still point at Netim's parking page. They are replaced when the website is connected to Cloudflare Pages.
 - Nothing has been added to the website itself yet, and the contact form still sends nothing.
 
