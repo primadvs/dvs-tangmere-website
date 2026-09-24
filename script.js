@@ -32,16 +32,109 @@ if (document.fonts && document.fonts.ready) {
   document.fonts.ready.then(measureNavHeight);
 }
 
-// Hero video: autoplay/loop for most visitors, but respect a reduced-motion
-// preference by pausing on the poster frame instead of forcing playback.
-const heroVideo = document.getElementById('heroVideo');
-if (heroVideo) {
-  if (prefersReducedMotion) {
-    heroVideo.pause();
-    heroVideo.removeAttribute('autoplay');
-  } else {
-    heroVideo.play().catch(() => {});
+// Hero film: six clips that crossfade in order and loop forever, always
+// autoplaying. Only the first clip loads with the page; each later clip
+// starts buffering while the one before it plays, and its poster (its own
+// first frame) covers any wait. Where a browser refuses autoplay (iOS Low
+// Power Mode, a page opened in a background tab), it starts on the first
+// tap or key press, and again whenever the page is shown.
+const heroReel = document.getElementById('heroReel');
+if (heroReel) {
+  const slides = [...heroReel.querySelectorAll('.hero__slide')];
+  const FADE_MS = 1200; // matches .hero__slide.is-entering in styles.css
+
+  let current = 0;
+  let inView = true;
+  let fade = null; // { from, to, timer } while a crossfade is running
+
+  const load = (i) => {
+    const v = slides[i];
+    if (!v.getAttribute('src')) {
+      v.poster = v.dataset.poster;
+      v.preload = 'auto';
+      v.src = v.dataset.src;
+    }
+  };
+
+  // A tap, click or key press anywhere on the page counts as permission to play.
+  let gestureArmed = false;
+  const startOnFirstGesture = () => {
+    if (gestureArmed) return;
+    gestureArmed = true;
+    const events = ['pointerdown', 'touchstart', 'keydown'];
+    const go = () => {
+      events.forEach((t) => document.removeEventListener(t, go, true));
+      gestureArmed = false;
+      syncPlayback();
+    };
+    events.forEach((t) => document.addEventListener(t, go, { capture: true, passive: true }));
+  };
+
+  // Plays whenever the hero can be seen; pauses when it can't, to save battery.
+  const syncPlayback = () => {
+    const v = slides[current];
+    if (inView && !document.hidden) {
+      // An AbortError only means our own pause() interrupted it; ignore that.
+      v.play().catch((err) => {
+        if (err && err.name === 'NotAllowedError') startOnFirstGesture();
+      });
+    } else {
+      v.pause();
+    }
+  };
+
+  const finishFade = () => {
+    if (!fade) return;
+    clearTimeout(fade.timer);
+    fade.to.classList.remove('is-entering');
+    fade.to.classList.add('is-active');
+    fade.from.classList.remove('is-active');
+    fade.from.pause();
+    // Rewind now, while hidden, so it's ready at frame one when the film loops.
+    fade.from.currentTime = 0;
+    fade = null;
+  };
+
+  const advance = () => {
+    const next = (current + 1) % slides.length;
+    const from = slides[current];
+    const to = slides[next];
+    load(next);
+    to.classList.add('is-entering');
+    current = next;
+    fade = { from, to, timer: setTimeout(finishFade, FADE_MS) };
+    syncPlayback();
+    load((next + 1) % slides.length);
+  };
+
+  // Start the next clip one fade-length before this one ends, so the outgoing
+  // clip is still moving underneath while the new one fades in over it.
+  const tick = () => {
+    const v = slides[current];
+    if (!fade && v.duration && v.duration - v.currentTime <= FADE_MS / 1000) {
+      advance();
+    }
+    requestAnimationFrame(tick);
+  };
+
+  // Resume whenever the page is shown again, including Safari restoring it
+  // from the back/forward cache (pageshow), which otherwise leaves it frozen.
+  document.addEventListener('visibilitychange', syncPlayback);
+  window.addEventListener('pageshow', syncPlayback);
+  window.addEventListener('focus', syncPlayback);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      syncPlayback();
+    }).observe(heroReel);
   }
+
+  // Some Safari versions only honour the muted attribute once it's also set
+  // as a property, and won't autoplay unmuted video at all.
+  slides.forEach((v) => { v.muted = true; v.defaultMuted = true; });
+  slides[0].addEventListener('playing', () => load(1), { once: true });
+  syncPlayback();
+  requestAnimationFrame(tick);
 }
 
 // Header: transparent over the hero photo, solid once scrolled past it.
