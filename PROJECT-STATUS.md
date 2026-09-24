@@ -115,12 +115,14 @@ Done:
 - Mail records set: one MX record to `smtp.google.com` (priority 1), one SPF record with Google's value, and Netim's old MX and SPF records deleted.
 - DKIM record published and authentication started in Google (can take up to 48 hours).
 - A first test email from the new address landed in iCloud's junk folder. That is expected for a brand new domain before DKIM is active. Retest once Google shows DKIM as working.
+- Two mailboxes created in Google Workspace: `chris@tangmere.aero` (Chris Edwards) and `craig@tangmere.aero` (Craig Lammiman).
 
-**Paused 2026-09-22, deliberately: email is not being pushed forward right now.** Waiting for Google to finish confirming DKIM (up to 48 hours from when it was published) before doing anything else with mailboxes. Pick back up once DKIM shows as active.
+**Still paused as of 2026-09-24: email is deliberately not being pushed forward.** Google's DKIM page is still showing "Authenticating email with DKIM" (checked 2026-09-23). The TXT record it is waiting on was confirmed live in Cloudflare's DNS, so nothing is misconfigured — this is simply Google's normal checking window (up to 48 hours from when it was published on 2026-09-21). Pick back up once it shows as authenticated.
 
 Still to do (once resumed):
 - Confirm DKIM is working, then add the DMARC record (start with `p=none`, about two days after SPF and DKIM are confirmed).
-- Create the remaining mailboxes. **Decided 2026-09-21: `sales@` will be a free Google Group, not a paid mailbox**, with a Shared Drive for shared files. The group should be private (only invited people can post, or only people inside the organization — not open to the public web), so it does not need to be published anywhere on the site. Still open: who the second administrator is, and confirming the seat count chosen at sign up is 6 (it was planned as 7 before this decision).
+- Create the remaining 4 mailboxes: James Hughes, Will Fanshawe, Pawel Chorzelski, Josh Le Breton.
+- Create `sales@`. **Decided 2026-09-21: it will be a free Google Group, not a paid mailbox**, with a Shared Drive for shared files. The group should be private (only invited people can post, or only people inside the organization — not open to the public web), so it does not need to be published anywhere on the site. Still open: who the second administrator is, and confirming the seat count chosen at sign up is 6 (it was planned as 7 before this decision).
 - The two A records for `tangmere.aero` and `www` still point at Netim's parking page. They are replaced when the website is connected to Cloudflare Pages.
 - Nothing has been added to the website itself yet, and the contact form still sends nothing.
 

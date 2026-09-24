@@ -339,7 +339,7 @@
             <li>Craig Lammiman &mdash; not yet reflected on the About page.</li>
             <li>A free <code>sales@</code> Google Group that the contact form and WhatsApp handoff both point at. It delivers to the chosen people and costs nothing extra. Shared files live in a Google Shared Drive.</li>
           </ul>
-          <p class="phase__note">The first administrator mailbox exists. Decided: <code>sales@</code> is a free group, not a paid mailbox. Still to decide: who the second administrator is, and to confirm the seat count at sign up is six.</p>
+          <p class="phase__note">Two mailboxes exist so far: <code>chris@tangmere.aero</code> and <code>craig@tangmere.aero</code>. Four remain: James Hughes, Will Fanshawe, Pawel Chorzelski, Josh Le Breton. Decided: <code>sales@</code> is a free group, not a paid mailbox. Still to decide: who the second administrator is, and to confirm the seat count at sign up is six.</p>
         </div>
       </article>
       <article class="phase">
@@ -351,7 +351,7 @@
             <li>SPF, DKIM and DMARC configured on the new domain &mdash; without these, enquiry replies are likely to land in spam, which quietly defeats the whole point.</li>
             <li><b>Wire the contact form to these mailboxes.</b> This is the fix for today's biggest gap, and it belongs here rather than waiting &mdash; UAT in Phase 4 can't meaningfully test the form until this is done.</li>
           </ul>
-          <p class="phase__note">Done so far: the domain is verified with Google, mail goes to Google (one MX record, priority 1), there is one SPF record with Google's value, and the DKIM record is published with authentication started, which can take up to 48 hours. A first test email landed in iCloud's junk folder, which is expected for a new domain before DKIM is active. Still to do: confirm DKIM, add DMARC (starting at p=none, about two days later), and retest.</p>
+          <p class="phase__note">Done so far: the domain is verified with Google, mail goes to Google (one MX record, priority 1), there is one SPF record with Google's value, and the DKIM record is published with authentication started, which can take up to 48 hours. A first test email landed in iCloud's junk folder, which is expected for a new domain before DKIM is active. Still to do: confirm DKIM (as of 2026-09-23 Google still shows &ldquo;Authenticating&rdquo; &mdash; the record it is checking for was confirmed live in Cloudflare&rsquo;s DNS, so nothing is misconfigured, this is Google&rsquo;s normal checking window), add DMARC (starting at p=none, about two days later), and retest.</p>
         </div>
       </article>
     </div>
