@@ -1,0 +1,534 @@
+<meta charset="UTF-8">
+<title>Tangmere Launch Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter+Tight:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:     #F3EEE1;
+    --surface:   #FBF8F1;
+    --sunk:      #EAE3D2;
+    --ink:       #16212B;
+    --ink-soft:  #2B3A46;
+    --slate:     #5A6570;
+    --cloud:     #DDD4BE;
+    --brass:     #A9782F;
+    --brass-dp:  #7A5420;
+    --ok:        #2E6140;
+    --ok-bg:     #E4EBE1;
+    --warn:      #9A6B1F;
+    --warn-bg:   #F1E7D2;
+    --stop:      #A6382F;
+    --stop-bg:   #F3E1DC;
+
+    --serif: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+    --sans: 'Inter Tight', -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+    --measure: 68ch;
+    --rule: 1px solid var(--cloud);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:    #131B22;
+      --surface:  #1A242D;
+      --sunk:     #101820;
+      --ink:      #EDE7D8;
+      --ink-soft: #C7C0B1;
+      --slate:    #939AA1;
+      --cloud:    #2F3A44;
+      --brass:    #C99748;
+      --brass-dp: #E0B168;
+      --ok:       #7FC298;
+      --ok-bg:    #1B2B21;
+      --warn:     #E0B168;
+      --warn-bg:  #2E2717;
+      --stop:     #E08677;
+      --stop-bg:  #2E1C19;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:    #131B22;
+    --surface:  #1A242D;
+    --sunk:     #101820;
+    --ink:      #EDE7D8;
+    --ink-soft: #C7C0B1;
+    --slate:    #939AA1;
+    --cloud:    #2F3A44;
+    --brass:    #C99748;
+    --brass-dp: #E0B168;
+    --ok:       #7FC298;
+    --ok-bg:    #1B2B21;
+    --warn:     #E0B168;
+    --warn-bg:  #2E2717;
+    --stop:     #E08677;
+    --stop-bg:  #2E1C19;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16.5px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: clamp(28px, 5vw, 68px) clamp(20px, 5vw, 40px) 90px;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--serif);
+    font-weight: 600;
+    line-height: 1.14;
+    text-wrap: balance;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  p { margin: 0; max-width: var(--measure); }
+  ul, ol { margin: 0; padding-left: 1.15em; max-width: var(--measure); }
+  li { margin-bottom: .3em; }
+  li::marker { color: var(--brass); }
+  a { color: var(--brass-dp); }
+
+  code {
+    font-family: var(--mono);
+    font-size: .86em;
+    background: var(--sunk);
+    padding: .1em .38em;
+    border-radius: 2px;
+  }
+
+  /* ---------- masthead ---------- */
+  .masthead { display: flex; flex-direction: column; gap: 16px; padding-bottom: 26px; border-bottom: 2px solid var(--ink); }
+  .kicker {
+    font-family: var(--mono); font-size: .72rem; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--brass-dp);
+  }
+  .masthead h1 { font-size: clamp(1.9rem, 4.8vw, 2.9rem); }
+  .lede {
+    font-family: var(--serif); font-style: italic; font-size: 1.14rem;
+    color: var(--ink-soft); max-width: 58ch;
+  }
+  .meta-row {
+    display: flex; flex-wrap: wrap; gap: 6px 26px;
+    font-family: var(--mono); font-size: .74rem; color: var(--slate);
+  }
+  .meta-row b { color: var(--ink-soft); font-weight: 500; }
+
+  /* ---------- sections ---------- */
+  section { margin-top: clamp(46px, 6vw, 70px); display: flex; flex-direction: column; gap: 20px; }
+  .sec-head { display: flex; flex-direction: column; gap: 6px; }
+  .sec-num { font-family: var(--mono); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--brass); }
+  .sec-head h2 { font-size: clamp(1.4rem, 2.8vw, 1.85rem); }
+
+  /* ---------- status snapshot ---------- */
+  .split { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--surface); border: var(--rule); border-radius: 2px;
+    padding: 18px 20px; display: flex; flex-direction: column; gap: 8px;
+  }
+  .card h3 { font-size: 1.02rem; font-family: var(--sans); font-weight: 600; }
+  .card p { font-size: .92rem; color: var(--ink-soft); }
+  .card--ok { border-top: 3px solid var(--ok); }
+  .card--warn { border-top: 3px solid var(--warn); }
+  .card--stop { border-top: 3px solid var(--stop); }
+
+  /* ---------- timeline (to scale) ---------- */
+  .tl { display: flex; flex-direction: column; gap: 0; }
+  .tl-scale {
+    display: grid; grid-template-columns: 190px repeat(6, 1fr);
+    font-family: var(--mono); font-size: .68rem; letter-spacing: .06em;
+    color: var(--slate); text-transform: uppercase;
+    padding-bottom: 8px; border-bottom: var(--rule);
+  }
+  .tl-scale span { text-align: center; }
+  .tl-scale span:first-child { text-align: left; }
+  .tl-row {
+    display: grid; grid-template-columns: 190px repeat(6, 1fr);
+    align-items: center; gap: 0 0;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--sunk);
+  }
+  .tl-row:last-child { border-bottom: none; }
+  .tl-label { font-size: .87rem; font-weight: 500; padding-right: 12px; }
+  .tl-track { grid-column: 2 / 8; position: relative; height: 22px; }
+  .tl-bar {
+    position: absolute; top: 2px; height: 18px; border-radius: 2px;
+    background: var(--brass); opacity: .85;
+    display: flex; align-items: center; padding: 0 8px;
+    font-family: var(--mono); font-size: .64rem; color: var(--paper);
+    white-space: nowrap; overflow: hidden;
+  }
+  .tl-bar--overlap { background: var(--brass-dp); }
+
+  /* ---------- phase cards ---------- */
+  .phases { display: flex; flex-direction: column; gap: 14px; }
+  .phase {
+    display: grid; grid-template-columns: 108px 1fr;
+    gap: 0 20px;
+    background: var(--surface); border: var(--rule); border-left: 3px solid var(--brass);
+    border-radius: 2px; padding: 20px 22px;
+  }
+  .phase__when { font-family: var(--mono); font-size: .74rem; letter-spacing: .04em; color: var(--brass-dp); padding-top: 3px; }
+  .phase__body { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .phase__title { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .phase__title h3 { font-size: 1.2rem; }
+  .phase__body ul { font-size: .92rem; }
+  .phase__note {
+    font-size: .86rem; color: var(--ink-soft); font-style: italic;
+    font-family: var(--serif); border-left: 2px solid var(--cloud); padding-left: 12px;
+  }
+
+  .pill {
+    display: inline-block; font-family: var(--mono); font-size: .64rem;
+    letter-spacing: .06em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 2px; border: 1px solid currentColor;
+    white-space: nowrap;
+  }
+  .pill--ok { color: var(--ok); }
+  .pill--warn { color: var(--warn); }
+  .pill--stop { color: var(--stop); }
+
+  /* ---------- tables ---------- */
+  .scroll { overflow-x: auto; border: var(--rule); border-radius: 2px; }
+  table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: .9rem; background: var(--surface); }
+  th, td { text-align: left; padding: 11px 15px; border-bottom: var(--rule); vertical-align: top; }
+  th {
+    font-family: var(--sans); font-size: .68rem; font-weight: 600; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--slate); background: var(--sunk); white-space: nowrap;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .callout {
+    background: var(--sunk); border-left: 3px solid var(--brass);
+    padding: 16px 20px; border-radius: 2px; display: flex; flex-direction: column; gap: 6px;
+  }
+  .callout h3 { font-size: 1.02rem; font-family: var(--sans); font-weight: 600; }
+  .callout p { font-size: .92rem; color: var(--ink-soft); }
+
+  footer {
+    margin-top: 70px; padding-top: 20px; border-top: var(--rule);
+    font-family: var(--mono); font-size: .7rem; color: var(--slate);
+  }
+
+  @media (max-width: 640px) {
+    .phase { grid-template-columns: 1fr; gap: 8px; }
+    .tl-scale, .tl-row { grid-template-columns: 1fr; }
+    .tl-scale span:not(:first-child) { display: none; }
+    .tl-track { grid-column: 1; height: auto; position: static; margin-top: 6px; }
+    .tl-bar { position: static; width: fit-content; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="kicker">Tangmere <s>Aircraft</s> Aero Sales &middot; Internal Proposal</p>
+    <h1>Domain, Email &amp; Launch Plan</h1>
+    <div class="meta-row">
+      <span><b>Prepared for</b> Tangmere team review</span>
+      <span><b>Current build</b> primadvs/dvs-tangmere-website</span>
+      <span><b>Status</b> Confirmed plan &mdash; three items pending Chris Edwards' decision, see below</span>
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-head">
+      <p class="sec-num">Schedule</p>
+      <h2>Six weeks, end to end</h2>
+    </div>
+    <p>Timings are estimates rather than fixed dates &mdash; the .aero step has one genuine external dependency (SITA's membership review) that sets the pace for everything after it.</p>
+
+    <div class="tl">
+      <div class="tl-scale">
+        <span></span><span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span>
+      </div>
+      <div class="tl-row">
+        <div class="tl-label">1 &middot; .aero domain</div>
+        <div class="tl-track"><div class="tl-bar" style="left:0%; width:16.6%;">Wk 1</div></div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-label">2 &middot; Email setup</div>
+        <div class="tl-track"><div class="tl-bar tl-bar--overlap" style="left:8.3%; width:25%;">Wk 1&ndash;2</div></div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-label">3 &middot; Fix form &amp; migration plan</div>
+        <div class="tl-track"><div class="tl-bar" style="left:16.6%; width:33.3%;">Wk 2&ndash;3</div></div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-label">4 &middot; Internal UAT</div>
+        <div class="tl-track"><div class="tl-bar tl-bar--overlap" style="left:33.3%; width:33.3%;">Wk 3&ndash;4</div></div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-label">5 &middot; Slow rollout</div>
+        <div class="tl-track"><div class="tl-bar" style="left:50%; width:50%;">Wk 4&ndash;6</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="sec-num">Phase 1 &middot; Week 1</p>
+      <h2>Acquire the .aero domain</h2>
+    </div>
+    <div class="phases">
+      <article class="phase">
+        <div class="phase__when">Days 1&ndash;2</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>Apply for Aero ID membership</h3><span class="pill pill--warn">External dependency</span></div>
+          <p>.aero is a restricted domain, reserved for the civil aviation community. Registration requires an Aero ID membership from the registry (SITA) before any registrar will sell the name.</p>
+          <ul>
+            <li>Tangmere qualifies squarely &mdash; the eligible categories include Business Aircraft Operator, Distribution and Aviation Professional.</li>
+            <li>Have ready: company registration, and evidence of aviation activity (this website is itself good evidence).</li>
+          </ul>
+          <p class="phase__note">Published turnaround from the registry is around two working days once eligibility is confirmed.</p>
+        </div>
+      </article>
+      <article class="phase">
+        <div class="phase__when">Days 3&ndash;5</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>Register the domain</h3> <span class="pill pill--ok">Registrar confirmed</span></div>
+          <ul>
+            <li>Once the membership ID is issued, purchase through <b>Netim.com</b>, an accredited .aero registrar.</li>
+            <li>Register for a multi year term (up to 10 years) to lock in the name early rather than renew annually.</li>
+            <li>The current tangmere-aircraft.com stays live and untouched the entire time &mdash; this runs in parallel, with no risk to the working site.</li>
+            <li><b>Chris Edwards' email is the account holder</b> for this purchase and all related acquisitions (the domain, and anything else bought during this rollout).</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="sec-num">Phase 2 &middot; Weeks 1&ndash;2</p>
+      <h2>Set up a working email path</h2>
+    </div>
+    <div class="phases">
+      <article class="phase">
+        <div class="phase__when">Once domain is live</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>Create the real mailboxes</h3></div>
+          <p>Seven mailboxes total &mdash; one address per person who should actually receive enquiries:</p>
+          <ul>
+            <li>James Hughes &middot; Chris Edwards &middot; Will Fanshawe &middot; Pawel Chorzelski &middot; Josh Le Breton &mdash; the five already named on the site.</li>
+            <li>Craig Lammiman &mdash; not yet reflected on the About page.</li>
+            <li>A shared <code>sales@</code> alias that the contact form and WhatsApp handoff both point at.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="phase">
+        <div class="phase__when">Same window</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>Make mail actually deliver</h3></div>
+          <ul>
+            <li>MX records pointed at the chosen mailbox provider.</li>
+            <li>SPF, DKIM and DMARC configured on the new domain &mdash; without these, enquiry replies are likely to land in spam, which quietly defeats the whole point.</li>
+            <li><b>Wire the contact form to these mailboxes.</b> This is the fix for today's biggest gap, and it belongs here rather than waiting &mdash; UAT in Phase 4 can't meaningfully test the form until this is done.</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="sec-num">Phase 3 &middot; Weeks 2&ndash;3</p>
+      <h2>Plan the migration</h2>
+    </div>
+    <div class="phases">
+      <article class="phase">
+        <div class="phase__when">Decide first</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>How the two domains relate</h3><span class="pill pill--ok">Decided</span></div>
+          <p><b>Move to tangmere.aero.</b> Both domains run alongside each other during the migration itself, specifically to limit friction and downtime while the switch happens &mdash; not as a permanent arrangement. Once the transition is complete, tangmere.aero is the one home for the site and tangmere-aircraft.com redirects fully to it. Nothing already in circulation breaks at any point, and the new domain ends up carrying the aviation specific credibility of a `.aero` address as Tangmere's single address, not a parallel one.</p>
+        </div>
+      </article>
+      <article class="phase">
+        <div class="phase__when">Then</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>Redirects</h3></div>
+          <ul>
+            <li>301 redirects from every current tangmere-aircraft.com page to its new domain equivalent, so no link anyone has already shared or bookmarked breaks.</li>
+            <li>A written rollback plan: DNS reverted to the current site within minutes if the new one shows a problem after go live.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="phase">
+        <div class="phase__when">Immediate</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>Netlify &mdash; the form works this week</h3><span class="pill pill--ok">Ships fast</span></div>
+          <p>Move hosting off GitHub Pages, which can't run the form at all. Netlify is a same repository swap: point the existing <code>&lt;form&gt;</code> tag at Netlify's form handling and enquiries email out, no backend to build. This alone closes today's biggest gap &mdash; nobody has to wait on Azure being built before enquiries start arriving.</p>
+        </div>
+      </article>
+      <article class="phase">
+        <div class="phase__when">Weeks 2&ndash;3, in parallel</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>Azure &mdash; the system underneath it</h3><span class="pill pill--warn">Takes longer, does more</span></div>
+          <p>Built alongside, not after: an Azure Function behind <code>/api/enquiry</code> that validates the submission, checks it isn't spam, writes it to Table Storage as a permanent record, then notifies the right mailbox via the Gmail API, using the Google Workspace mailboxes set up in Phase 2. This is what turns "an email was sent" into "an enquiry exists and can be found again."</p>
+        </div>
+      </article>
+      <article class="phase">
+        <div class="phase__when">Once both are live</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>Why keep both running</h3></div>
+          <p>Not a duplicate system &mdash; two systems with different jobs, cheap enough to run together indefinitely:</p>
+          <ul>
+            <li><b>Azure is the record of truth.</b> Every enquiry lands in Table Storage, categorised by the dropdown, findable later.</li>
+            <li><b>Netlify is the safety net.</b> If the Azure Function is ever down, mid deploy, or hits an unexpected error, the same form submission still reaches Netlify's handler and still emails an employee &mdash; nothing depends on one system's uptime.</li>
+            <li>Total added cost of keeping both: effectively &pound;0/month at this volume. The redundancy is close to free, which is the actual argument for running them simultaneously rather than picking one.</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="sec-num">Phase 4 &middot; Weeks 3&ndash;4</p>
+      <h2>Internal UAT</h2>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Check</th><th>Covers</th><th>Who</th></tr></thead>
+        <tbody>
+          <tr><td><b>All 11 pages</b></td><td>Every link, every image, no dead ends</td><td>Whole team</td></tr>
+          <tr><td><b>Contact form</b></td><td>A real test enquiry reaches the right mailbox</td><td>Each named employee, testing their own address</td></tr>
+          <tr><td><b>WhatsApp handoff</b></td><td>Pre filled message opens correctly with the enquirer's details</td><td>One tester, both mobile and desktop</td></tr>
+          <tr><td><b>Cross device</b></td><td>Mobile and desktop, two browsers minimum</td><td>Whole team, own devices</td></tr>
+          <tr><td><b>Sign off</b></td><td>Every row above checked before anyone outside the team sees it</td><td>Named owner, TBC</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="phase__note" style="max-width:none">The hero video is placeholder stock footage, kept deliberately until Tangmere's own is filmed &mdash; not a defect, a confirmed choice.</p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="sec-num">Phase 5 &middot; Weeks 4&ndash;6</p>
+      <h2>Slow rollout, not a switch flip</h2>
+    </div>
+    <div class="phases">
+      <article class="phase">
+        <div class="phase__when">Week 4</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>Soft launch to a trusted few</h3></div>
+          <p>Share the new domain with a small handful of existing clients or contacts before any public announcement. Real usage surfaces problems that internal testing won't.</p>
+        </div>
+      </article>
+      <article class="phase">
+        <div class="phase__when">Week 5</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>Watch, don't wait passively</h3></div>
+          <ul>
+            <li>Confirm enquiries are actually arriving in mailboxes, not just showing the on page confirmation.</li>
+            <li>Check for broken links, missing redirects, and that email isn't landing in spam.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="phase">
+        <div class="phase__when">Week 6</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>Full cutover</h3></div>
+          <p>Only once Week 5 has run clean: tangmere.aero becomes Tangmere's one address, and tangmere-aircraft.com switches from running alongside it to redirecting fully to it. The old address keeps working as a redirect rather than disappearing, so nothing already in circulation breaks.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="sec-num">Budget</p>
+      <h2>Indicative costs</h2>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Item</th><th class="num">Typical range</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><b>.aero registration</b></td><td class="num">$50&ndash;90 / yr</td><td>Varies by registrar; multi year terms usually cost less per year</td></tr>
+          <tr><td><b>Aero ID membership</b></td><td class="num">Confirm with SITA</td><td>One time eligibility step ahead of registration</td></tr>
+          <tr><td><b>Mailboxes (&times;7) &mdash; annual</b> <span class="pill pill--ok" style="margin-left:6px">Confirmed</span></td><td class="num">$98.00 / mo</td><td>Google Workspace Business Standard, billed annually &mdash; $1,176/yr. Chosen over Business Starter for the 2TB/user pooled storage and shared drives (useful for contracts and aircraft documentation) and eSignature, without the Enterprise scale admin tooling of Business Plus.</td></tr>
+          <tr><td><b>Mailboxes (&times;7) &mdash; monthly</b> <span class="pill pill--ok" style="margin-left:6px">Confirmed</span></td><td class="num">$117.60 / mo</td><td>Same plan, no annual commitment &mdash; costs more but avoids locking in before Phase 4 proves the setup works</td></tr>
+          <tr><td><b>Hosting (Netlify)</b></td><td class="num">Free tier likely sufficient</td><td>Static hosting, plus the immediate form fix</td></tr>
+          <tr><td><b>Azure (Function + Table Storage + Gmail API)</b></td><td class="num">~$0 / mo</td><td>Function executions, storage and Gmail API calls all sit inside free tiers at this enquiry volume</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:.86rem; color:var(--slate)">Mailbox figures are confirmed from Google's own pricing page, quoted in USD as published &mdash; convert to GBP and confirm any Channel Islands billing treatment at time of purchase, since neither is shown on Google's own page. Everything else is an indicative market range for planning, not a quote &mdash; confirm exact pricing with Netim.com before committing.</p>
+
+    <div class="phase" style="grid-template-columns:1fr; border-left-color:var(--slate)">
+      <div class="phase__body">
+        <div class="phase__title"><h3 style="font-size:1.05rem">Optional: offloading media to Google Cloud Storage</h3><span class="pill pill--ok">Not required to launch</span></div>
+        <p>Today's entire media footprint is <b>32.9&nbsp;MB</b> &mdash; almost all of it the placeholder stock hero video. That figure is a snapshot of today's stand in content, not a stable number: once Tangmere's own footage and photography replace it, the real footprint could land smaller or larger depending on what's actually shot. That's small enough to sit inside GCS's Always Free allowance either way at this scale, but it's also small enough that git tracks it forever: every time the hero video gets swapped, the repository grows by the full file size again, not just the difference. Moving large media out of the repository and into Cloud Storage &mdash; referenced by URL rather than committed &mdash; fixes that permanently, regardless of how the footprint changes later.</p>
+        <div class="scroll">
+          <table>
+            <thead><tr><th>Cost driver</th><th class="num">Typical range</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td><b>Storage</b></td><td class="num">$0 / mo</td><td>$0.020/GB-month standard rate; 5 GB/month is Always Free in US regions &mdash; today's 33 MB (placeholder content) fits with a lot of room to grow once real footage and photography replace it</td></tr>
+              <tr><td><b>Egress (bandwidth)</b></td><td class="num">~$4&ndash;40+ / mo</td><td>$0.12/GB after a free allowance, and this is the real cost driver: it scales with how many visitors load the video, not with how much is stored</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="phase__note" style="max-width:none">Worth noting: Netlify (already proposed for hosting in Phase 3) serves the same video for free as part of its own plan. GCS only earns its place here as the fix for the git bloat problem above, or if media outgrows what a hosting plan's free tier covers &mdash; not as a second hosting bill.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="sec-num">Open decisions</p>
+      <h2>Chris Edwards decides</h2>
+    </div>
+    <p>Everything above this point is the plan Tangmere is going with. The three items below are the only things still open &mdash; all of them sit with Chris, as the person taking ownership of the site's copy, voice and content. Nothing here blocks Phases 1&ndash;3; all three can be settled any time before Phase 4 sign off.</p>
+
+    <div class="phases">
+      <article class="phase">
+        <div class="phase__when">Copy</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>The "Speak to a Pilot" button</h3></div>
+          <p>Three directions, or keep the original:</p>
+          <ul>
+            <li><b>Enquire Now</b> &mdash; neutral, covers buying and selling equally, not just pilots.</li>
+            <li><b>Get in Touch</b> &mdash; warmer, less transactional.</li>
+            <li><b>Talk to Us</b> &mdash; keeps the personal tone without the "pilot" framing.</li>
+          </ul>
+          <p class="phase__note">Part of a broader pass already on the known issues list &mdash; a few phrases across the site read as generic rather than in Tangmere's own voice. That whole pass is Chris's, not just this one button.</p>
+        </div>
+      </article>
+      <article class="phase">
+        <div class="phase__when">Typography</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>Avenir or a Hoefler &amp; Co typeface</h3><span class="pill pill--warn">Real cost either way</span> <span class="pill pill--warn">Discovery and pricing needed</span></div>
+          <p>The current display face (EB Garamond, paired with Inter Tight) was chosen deliberately to avoid the look of a generic AI generated site, and is free via Google Fonts. Both alternatives are paid, unlike what's live today:</p>
+          <ul>
+            <li><b>Avenir</b> &mdash; licensed through Adobe Fonts, roughly $20&ndash;60/month depending on tier (often already covered if anyone on the team has a Creative Cloud subscription). A geometric sans &mdash; a materially different, more modern direction than the current editorial serif look.</li>
+            <li><b>A Hoefler &amp; Co typeface</b> &mdash; licensed through Cloud.typography, typically from $99/year per family for web use, scaling with traffic. Which specific face (Hoefler Text, Mercury, Gotham, and others all look and cost differently) still needs choosing.</li>
+          </ul>
+          <p class="phase__note">Neither option has a confirmed quote yet &mdash; before Chris picks a direction, the actual specific face needs choosing (for the Hoefler &amp; Co route) and a real quote requested from the relevant foundry, rather than the indicative ranges above.</p>
+        </div>
+      </article>
+      <article class="phase">
+        <div class="phase__when">File storage</div>
+        <div class="phase__body">
+          <div class="phase__title"><h3>Google Drive, beyond what Workspace already includes</h3><span class="pill pill--warn">Needs clarifying</span></div>
+          <p>Google Workspace Business Standard already bundles Drive with 2TB pooled storage per mailbox and shared drives &mdash; that's accounted for in the budget above. If something beyond that was meant (a dedicated shared drive structure for contracts and aircraft documentation, say), that's a real but separate ask worth spelling out once Chris has a chance to clarify it.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <footer>
+    Tangmere <s>Aircraft</s> Aero Sales &middot; Confirmed launch plan &middot; Not yet actioned
+  </footer>
+
+</div>

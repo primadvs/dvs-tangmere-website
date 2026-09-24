@@ -28,6 +28,9 @@ SITE_DIR = os.path.dirname(os.path.abspath(__file__))
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 4173
 
 
+TEXT_TYPES = ("text/html", "text/css", "text/javascript", "application/javascript")
+
+
 class NoCacheHandler(http.server.SimpleHTTPRequestHandler):
     _range_left = None
 
@@ -35,6 +38,16 @@ class NoCacheHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header("Cache-Control", "no-store, no-cache, must-revalidate")
         self.send_header("Accept-Ranges", "bytes")
         super().end_headers()
+
+    def guess_type(self, path):
+        # Without an explicit charset, browsers fall back to guessing the
+        # encoding, which has misread this project's UTF-8 middle dots
+        # (·) as unrelated CJK characters. All the site's text files are
+        # UTF-8, so say so.
+        mimetype = super().guess_type(path)
+        if mimetype in TEXT_TYPES:
+            return f"{mimetype}; charset=UTF-8"
+        return mimetype
 
     def send_head(self):
         path = self.translate_path(self.path)
