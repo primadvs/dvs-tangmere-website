@@ -398,9 +398,9 @@
       <article class="phase">
         <div class="phase__when">Weeks 2&ndash;3</div>
         <div class="phase__body">
-          <div class="phase__title"><h3>Azure &mdash; how the contact form works</h3><span class="pill pill--warn">Now the only route</span></div>
-          <p>An Azure Function behind <code>/api/enquiry</code> validates the submission, checks it isn't spam, writes it to Table Storage as a permanent record, then notifies the right mailbox via the Gmail API, using the Google Workspace mailboxes set up in Phase 2. This is what turns "an email was sent" into "an enquiry exists and can be found again."</p>
-          <p class="phase__note">Cloudflare Pages has no form handling of its own, so this Function is now the only way enquiries reach a mailbox. Until it is built and tested the contact form still sends nothing, which puts it on the critical path of Phase 3 rather than running alongside a quick fix.</p>
+          <div class="phase__title"><h3>Azure &mdash; how the contact form works</h3><span class="pill pill--warn">Code written</span></div>
+          <p>An Azure Function behind <code>/api/enquiry</code> validates the submission, checks it isn't spam, writes it to Table Storage as a permanent record, then notifies <code>sales@</code> via the Gmail API, with the enquirer's own address set as Reply To. This is what turns "an email was sent" into "an enquiry exists and can be found again."</p>
+          <p class="phase__note">Cloudflare Pages has no form handling of its own, so this Function is now the only way enquiries reach a mailbox. The code is written and saved in the repository at <code>backend/</code>, with its own README, but not yet deployed or tested &mdash; there was no way to run it locally, so the first real test happens once it is live in Azure. Until then the contact form still sends nothing, which puts it on the critical path of Phase 3 rather than running alongside a quick fix.</p>
         </div>
       </article>
     </div>

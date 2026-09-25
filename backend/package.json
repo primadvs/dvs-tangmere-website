@@ -1,0 +1,14 @@
+{
+  "name": "tangmere-enquiry-backend",
+  "version": "1.0.0",
+  "description": "Receives the Tangmere website contact form, saves each enquiry permanently, and emails the right people. Deployed as an Azure Function, independent of the website's own hosting.",
+  "main": "src/functions/*.js",
+  "scripts": {
+    "start": "func start"
+  },
+  "dependencies": {
+    "@azure/functions": "^4.5.1",
+    "@azure/data-tables": "^13.2.2",
+    "googleapis": "^140.0.1"
+  }
+}

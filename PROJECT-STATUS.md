@@ -214,9 +214,9 @@ Copy tone and font choice are also open — see §8, where they're written up pr
 
 ---
 
-## 10. The backend build (in progress, paused)
+## 10. The backend build (code written, not yet deployed)
 
-An Azure Function project was designed but **not yet written or deployed**. The agreed shape:
+**The Function's code has been written**, saved at `backend/` in the repository, with its own `backend/README.md` explaining every remaining step in plain language. It has not been run or deployed anywhere yet — there was no Node.js available to test it locally, so the first real test happens at deployment. The agreed shape:
 
 ```
 Customer submits the form
@@ -231,10 +231,10 @@ Customer submits the form
 The Function will live in its own folder, separate from the website itself, and deployed as its own independent piece — the site's hosting (Cloudflare Pages) and this backend don't depend on each other.
 
 **Still needed before this can be built and go live:**
-- The Google Workspace mailboxes from Phase 2 need to exist first (the Function sends email through them)
-- An Azure account, and inside it: a "Function App" resource and a "Storage Account" — both require someone to click through Azure's own sign up
-- A "Table Storage" (this is not the same thing as the Google Cloud Storage question that was also discussed and set aside — see below)
-- A Google Cloud service account with domain wide delegation, with permission to send the notification email (a group cannot be sent from directly, so it is sent from one real mailbox, for example a website notifications sender, addressed to the `sales@` group, with the enquirer as Reply To) — this step specifically requires an administrator of the Google Workspace account to approve it; it can't be done by a script or by Claude Code
+- An Azure account, and inside it a "Function App" resource (creates its own "Storage Account" automatically, which doubles as the Table Storage the Function needs) — requires someone to click through Azure's own sign up. **In progress.**
+- A Google Cloud service account with domain wide delegation, with permission to send the notification email (a group cannot be sent from directly, so it is sent from one real mailbox, for example `chris@tangmere.aero` to start, addressed to the `sales@` group, with the enquirer as Reply To) — this step specifically requires an administrator of the Google Workspace account to approve it; it can't be done by a script or by Claude Code. Full steps are in `backend/README.md`.
+- Connect the Function App to this GitHub repository (Azure's "Deployment Center"), the same automatic pattern already working for the website on Cloudflare Pages.
+- Once deployed and tested with a direct request, change the website's own contact form (`script.js`) to actually call it, instead of showing a fake "thank you" message locally.
 
 ### A related idea that was set aside: Google Cloud Storage
 

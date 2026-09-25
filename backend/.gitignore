@@ -1,0 +1,7 @@
+node_modules/
+local.settings.json
+bin/
+obj/
+.python_packages/
+__pycache__/
+.vscode/
