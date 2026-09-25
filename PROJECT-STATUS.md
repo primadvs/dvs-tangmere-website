@@ -43,7 +43,7 @@ This is documented in detail in §7 and §9. Fixing it is the top priority of th
 |---|---|
 | **Live site** | [primadvs.github.io/dvs-tangmere-website](https://primadvs.github.io/dvs-tangmere-website/) — public, works, free |
 | **All 11 pages** | Load correctly: homepage, fleet listing, about, 8 aircraft detail pages |
-| **Hero video, photos, styling** | All working as designed |
+| **Hero video, photos, styling** | All working as designed. The hero video changed since the last check — see §9 |
 | **Contact form** | **Does not send anywhere** — see §3 |
 | **WhatsApp button** | Works — opens WhatsApp with a pre filled message |
 | **Language switcher** | Visible in the header but does nothing when clicked — no translations exist. |
@@ -138,7 +138,7 @@ Still to do (once resumed):
 - **Hosting: Cloudflare Pages (chosen).** The site moves off GitHub Pages, which can't run a form and whose terms say it isn't meant for running an online business. Cloudflare's free plan has unlimited bandwidth, 500 builds a month and needs no card, and it builds the site straight from the GitHub repository, so GitHub stays the master copy.
 - **Why not Netlify:** its free plan is 300 credits a month with a hard stop. Each publish costs 15 credits, bandwidth costs 20 credits per GB, and running out pauses every site on the account. The one thing given up is Netlify's free, ready made form handling.
 - **Terms check (read on 2026-09-19):** the terms don't ban business use. A free site can't collect card details, and Tangmere's takes none. Free services carry no liability and Cloudflare may suspend an account at any time, so the site can be redeployed elsewhere within minutes if that happens. Cloudflare's CDN terms let it limit customers who serve video or a large share of big files without paid services; a short looping clip of a few MB is unlikely to count.
-- **File limit:** a single file can be at most 25 MiB. The current 32.9 MB hero video is over that and would not deploy. The replacement has a size target: 1080p, 10 to 15 seconds, no audio, roughly 3 to 6 MB, with a poster frame taken from the video itself.
+- **File limit:** a single file can be at most 25 MiB. The old 32.9 MB stock video was over that and would not have deployed. It has since been replaced with seven separate clips (2.4–3.5 MB each), all comfortably under the limit — confirmed by the Cloudflare Pages deployment already working (see §7 progress list).
 - **The contact form runs on Azure.** A small piece of custom code (an "Azure Function") receives the form submission, checks it isn't spam, **saves a permanent record of the enquiry**, and then sends the notification email. This is what turns "an email was sent" into "an enquiry exists and can be found again later". Cloudflare Pages has no form handling of its own, so this is now the only way enquiries reach a mailbox. Until it is built and tested the contact form still sends nothing, which puts it on the critical path of this phase.
 - Also in this phase: redirect every old tangmere-aircraft.com page to its new equivalent so no bookmarked or shared link breaks, and write down a rollback plan (how to point everything back at the current site within minutes if something goes wrong).
 
@@ -158,7 +158,7 @@ Still to do (once resumed):
 - Every page, every link, every image
 - A real test enquiry, checked by each employee in their own new mailbox
 - The WhatsApp button, on both a phone and a computer
-- The hero video is placeholder stock footage, kept deliberately until Tangmere's own is filmed — a confirmed choice, not something to re decide here.
+- The hero video, whichever it turns out to be (see §9), on both a phone and a computer.
 
 ### Phase 5 — A slow rollout, not a switch flip (Weeks 4–6)
 
@@ -206,7 +206,7 @@ Everything in §7 is the confirmed plan. These three items are the only things s
 | Issue | Detail | Urgency |
 |---|---|---|
 | **Contact form doesn't send** | See §3. The single blocker before real traffic should be sent to this site. | Fix before launch |
-| **Hero video is stock footage** | The homepage's background video is free stock footage (from a site called Pexels), not Tangmere's own — it shows a jet that isn't part of the fleet. **This was a deliberate decision, not an oversight** — it stays until Tangmere films its own footage. | On hold, by choice |
+| **Hero video** | Updated since the last check: the single Pexels stock clip has been replaced with a multi clip reel (Falcon 2000LXS cabin and engine, Bell 429 from several angles). **Needs confirming: is this Tangmere's own filmed footage now, or a newer stock reel standing in until real footage exists?** | Confirm and update this row |
 | **2014 Bell 429 has no photos** | Shows a placeholder logo instead of the aircraft, since it hasn't arrived into inventory yet. | Fix when it arrives |
 | **2027 Bell 429 photo isn't the real aircraft** | It's Bell's own manufacturer photo, since this is a new build aircraft that doesn't exist yet. Reasonable for now, but not genuinely Tangmere's. | Fix at delivery |
 
@@ -230,15 +230,22 @@ Customer submits the form
 
 The Function will live in its own folder, separate from the website itself, and deployed as its own independent piece — the site's hosting (Cloudflare Pages) and this backend don't depend on each other.
 
+Done:
+- Azure account created, and inside it a Function App named `tangmere-backend`, region UK West, on the **Consumption (Windows)** plan (the free tier eligible, pay as you go option — Flex Consumption was tried first but isn't supported on a Free Trial subscription).
+- The Function App connected to this GitHub repository via Deployment Center, using GitHub Actions for continuous deployment (every push to `main` redeploys automatically, same pattern as Cloudflare Pages for the website).
+- The generated workflow file (`.github/workflows/main_tangmere-backend.yml`) originally pointed at the repository root; corrected to point at the `backend` folder, since that's where the Function's code actually lives.
+
 **Still needed before this can be built and go live:**
-- An Azure account, and inside it a "Function App" resource (creates its own "Storage Account" automatically, which doubles as the Table Storage the Function needs) — requires someone to click through Azure's own sign up. **In progress.**
+- Confirm the first deployment actually succeeds (check the **Actions** tab on GitHub, and the Function App's own **Deployment Center** logs, once this is pushed).
 - A Google Cloud service account with domain wide delegation, with permission to send the notification email (a group cannot be sent from directly, so it is sent from one real mailbox, for example `chris@tangmere.aero` to start, addressed to the `sales@` group, with the enquirer as Reply To) — this step specifically requires an administrator of the Google Workspace account to approve it; it can't be done by a script or by Claude Code. Full steps are in `backend/README.md`.
-- Connect the Function App to this GitHub repository (Azure's "Deployment Center"), the same automatic pattern already working for the website on Cloudflare Pages.
+- Enter the application settings the Function needs (`TABLES_CONNECTION_STRING`, `GOOGLE_SERVICE_ACCOUNT_JSON`, etc. — full list in `backend/local.settings.json.example`) into the Function App's own **Configuration** page in Azure.
 - Once deployed and tested with a direct request, change the website's own contact form (`script.js`) to actually call it, instead of showing a fake "thank you" message locally.
+
+**Also found and fixed while doing this:** this local working folder and the real GitHub repository had quietly drifted apart — GitHub had picked up real website work (a new multi clip hero video reel, renamed and reorganised fleet images, an updated `serve.py`) that hadn't made it into this folder, while this folder had all of this session's plan and backend work that hadn't reached GitHub. Both were merged together cleanly with nothing lost; see the hero video row in §9.
 
 ### A related idea that was set aside: Google Cloud Storage
 
-Separately, moving the website's large files (mainly the 32.9 MB hero video) out of the GitHub repository and into a dedicated storage service (Google Cloud Storage) was discussed. This is **not required to launch** — it solves a narrower problem: every time the video file changes, git keeps the old version forever, so the repository slowly grows. The 32.9 MB figure is today's placeholder stock footage, not a stable number — once Tangmere's own footage and photography replace it, the real footprint could end up smaller or larger depending on what's actually shot. Storage cost for Tangmere's current files would be $0/month, comfortably inside a free allowance regardless; the real cost is "egress" (bandwidth for serving the video to visitors), roughly $4–40/month depending on how many people visit. Cloudflare Pages caps a single file at 25 MiB, so the hero video has to be compressed to fit anyway. Worth revisiting once the video is replaced with real footage, not before.
+Separately, moving the website's large files (the hero video clips) out of the GitHub repository and into a dedicated storage service (Google Cloud Storage) was discussed. This is **not required to launch** — it solves a narrower problem: every time a video file changes, git keeps the old version forever, so the repository slowly grows. The old 32.9 MB single stock video has since been replaced with seven clips totalling about 20 MB (see §9); the real footprint could still change again once it's confirmed whether these are Tangmere's own footage or a further placeholder. Storage cost for Tangmere's current files would be $0/month, comfortably inside a free allowance regardless; the real cost is "egress" (bandwidth for serving video to visitors), roughly $4–40/month depending on how many people visit. Worth revisiting only if the repository's size becomes a real nuisance, not before.
 
 ---
 
