@@ -214,9 +214,9 @@ Copy tone and font choice are also open — see §8, where they're written up pr
 
 ---
 
-## 10. The backend build (code written, not yet deployed)
+## 10. The backend build (deployed and tested)
 
-**The Function's code has been written**, saved at `backend/` in the repository, with its own `backend/README.md` explaining every remaining step in plain language. It has not been run or deployed anywhere yet — there was no Node.js available to test it locally, so the first real test happens at deployment. The agreed shape:
+**The Function is written, deployed, and tested successfully** as of 2026-09-25. It's saved at `backend/` in the repository, with its own `backend/README.md` explaining every remaining step in plain language. The agreed shape:
 
 ```
 Customer submits the form
@@ -224,8 +224,9 @@ Customer submits the form
    → Azure Function receives it
    → checks it isn't spam (a simple hidden field trick called a "honeypot")
    → saves a permanent record (in a lightweight Azure database called "Table Storage")
-   → sends a notification email (via the Gmail API, using the same
-     Google Workspace mailboxes from Phase 2)
+   → adds a row to a shared Google Sheet, so staff can browse enquiries
+     without needing to look at Azure at all
+   → sends a notification email (via the Gmail API, to the sales@ group)
 ```
 
 The Function will live in its own folder, separate from the website itself, and deployed as its own independent piece — the site's hosting (Cloudflare Pages) and this backend don't depend on each other.
@@ -239,7 +240,8 @@ Done:
 - **Tested successfully end to end on 2026-09-25**, with a direct request standing in for the website form: the enquiry was validated, saved to the `Enquiries` table exactly as expected (checked field by field in Azure's Storage browser), and the Function returned success. The single biggest gap in the whole project — the form sending nowhere — is now solved on the backend side.
 
 **Still needed before this can be built and go live:**
-- A Google Cloud service account with domain wide delegation, with permission to send the notification email (a group cannot be sent from directly, so it is sent from one real mailbox, for example `chris@tangmere.aero` to start, addressed to the `sales@` group, with the enquirer as Reply To) — this step specifically requires an administrator of the Google Workspace account to approve it; it can't be done by a script or by Claude Code. Full steps are in `backend/README.md`. Until this exists, an enquiry still saves correctly but no notification email is sent.
+- A Google Cloud service account with domain wide delegation, authorised for both the Gmail API and the Google Sheets API, with permission to send the notification email (a group cannot be sent from directly, so it is sent from one real mailbox, for example `chris@tangmere.aero` to start, addressed to the `sales@` group, with the enquirer as Reply To) and to write to the shared Sheet below — this step specifically requires Chris Edwards, the confirmed Workspace administrator, to approve it; it can't be done by a script or by Claude Code. Full steps are in `backend/README.md`. Until this exists, an enquiry still saves correctly but no Sheet row or notification email is sent.
+- **A shared Google Sheet, in a Shared Drive**, so staff can browse every enquiry in a familiar spreadsheet without needing to look at Azure at all — requested 2026-09-25. The Sheet itself, and sharing it with the service account above, still needs creating. Full steps are in `backend/README.md`. Table Storage remains the permanent record either way; the Sheet is a convenience view on top of it.
 - Change the website's own contact form (`script.js`) to actually call this Function's real address, instead of showing a fake "thank you" message locally.
 - **Next, once the above two are done:** stronger spam and bot protection. The code already has a honeypot field, origin checking and field validation, but three more layers are worth adding before real traffic arrives: Cloudflare Turnstile (a free, privacy respecting alternative to Google's reCAPTCHA, natural fit since the site is already on Cloudflare), a basic rate limit on repeated submissions from the same address (a free Cloudflare dashboard setting, no code needed), and rejecting a submission that arrives suspiciously fast after the page loads.
 - Delete the test row saved during today's check (PartitionKey `2026-09`, name "Test Person") from the `Enquiries` table once ready, so the first real record isn't sitting next to a test one.

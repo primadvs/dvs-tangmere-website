@@ -1,10 +1,14 @@
-// The Tangmere website's contact form posts here. Three things happen,
+// The Tangmere website's contact form posts here. Four things happen,
 // in order, for every real enquiry:
 //   1. It's checked for obvious spam (a hidden field a visitor never
 //      sees, but a bot filling in every field tends to fill in too).
 //   2. It's saved permanently in Azure Table Storage, so an enquiry
-//      exists and can be found again even if an email goes astray.
-//   3. A notification email is sent, via the Gmail API, to Tangmere's
+//      exists and can be found again even if an email or a sheet
+//      write goes astray.
+//   3. It's added as a new row in a shared Google Sheet, so anyone at
+//      Tangmere can open one familiar spreadsheet in Drive and see
+//      every enquiry, without needing to look at Azure at all.
+//   4. A notification email is sent, via the Gmail API, to Tangmere's
 //      sales@ group — with the enquirer's own address set as Reply To,
 //      so a reply goes straight back to them.
 //
@@ -79,18 +83,46 @@ async function saveEnquiry(clean) {
   return entity;
 }
 
+// -------- Shared Google credentials --------
+// Both the Sheet and the Gmail notification use the same service
+// account, impersonating one real Tangmere mailbox. One authorisation
+// step in Google Workspace (see backend/README.md) covers both.
+function googleAuth(scopes) {
+  const key = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON);
+  return new google.auth.JWT({
+    email: key.client_email,
+    key: key.private_key,
+    scopes,
+    subject: process.env.GOOGLE_SENDER_EMAIL, // impersonates this mailbox
+  });
+}
+
+// -------- Shared Google Sheet --------
+// Appends one row per enquiry to a Sheet living in a Shared Drive, so
+// staff can browse every enquiry in a familiar spreadsheet, without
+// needing to look at Azure at all. This is a convenience view — Table
+// Storage above is the permanent record of record.
+async function appendToSheet(clean, entity) {
+  const sheetId = process.env.SHEET_ID;
+  if (!sheetId) return; // not set up yet — skip quietly, nothing else depends on this
+  const auth = googleAuth(['https://www.googleapis.com/auth/spreadsheets']);
+  const sheets = google.sheets({ version: 'v4', auth });
+  await sheets.spreadsheets.values.append({
+    spreadsheetId: sheetId,
+    range: 'Enquiries!A:F',
+    valueInputOption: 'RAW',
+    requestBody: {
+      values: [[entity.receivedAt, clean.name, clean.email, clean.interest, clean.message, entity.rowKey]],
+    },
+  });
+}
+
 // -------- Gmail API notification --------
 // A Google Group can't send mail itself, so this sends from one real,
 // authorised mailbox (GOOGLE_SENDER_EMAIL) and addresses it to the
 // sales@ group, which then delivers it to everyone in the group.
 async function sendNotification(clean) {
-  const key = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON);
-  const auth = new google.auth.JWT({
-    email: key.client_email,
-    key: key.private_key,
-    scopes: ['https://www.googleapis.com/auth/gmail.send'],
-    subject: process.env.GOOGLE_SENDER_EMAIL, // impersonates this mailbox
-  });
+  const auth = googleAuth(['https://www.googleapis.com/auth/gmail.send']);
   const gmail = google.gmail({ version: 'v1', auth });
 
   const to = process.env.SALES_GROUP_EMAIL;
@@ -152,11 +184,21 @@ app.http('enquiry', {
       return { status: 422, headers: corsHeaders(origin), jsonBody: { errors } };
     }
 
+    let entity;
     try {
-      await saveEnquiry(clean);
+      entity = await saveEnquiry(clean);
     } catch (err) {
       context.error('Failed to save enquiry', err);
       return { status: 500, headers: corsHeaders(origin), jsonBody: { error: 'Could not save enquiry' } };
+    }
+
+    try {
+      await appendToSheet(clean, entity);
+    } catch (err) {
+      // Same reasoning as the email below: the permanent record in
+      // Table Storage already exists, so a sheet hiccup is logged,
+      // not failed back to the visitor.
+      context.error('Enquiry saved but Sheet row failed', err);
     }
 
     try {

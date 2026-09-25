@@ -14,6 +14,7 @@
 
     "GOOGLE_SENDER_EMAIL": "the real mailbox this sends from, e.g. chris@tangmere.aero — a Google Group cannot send email itself",
     "SALES_GROUP_EMAIL": "sales@tangmere.aero",
-    "GOOGLE_SERVICE_ACCOUNT_JSON": "the full JSON key for the Google Cloud service account, as one line — see backend/README.md for how this is created and authorised"
+    "GOOGLE_SERVICE_ACCOUNT_JSON": "the full JSON key for the Google Cloud service account, as one line — see backend/README.md for how this is created and authorised",
+    "SHEET_ID": "the long id from the shared enquiries spreadsheet's own URL — see backend/README.md. Leave unset to skip this step for now; nothing else depends on it"
   }
 }
