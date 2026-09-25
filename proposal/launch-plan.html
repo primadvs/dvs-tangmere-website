@@ -389,7 +389,7 @@
           <ul>
             <li>The terms don't ban business use. A free site can't collect card details, and Tangmere's site takes none.</li>
             <li>Free services carry no liability and Cloudflare may suspend an account at any time, so the site can be redeployed to another host within minutes if that ever happens.</li>
-            <li>A single file can be at most 25 MiB. The current 32.9 MB hero video is over that and would not deploy, so the replacement has a size target: 1080p, 10 to 15 seconds, no audio, roughly 3 to 6 MB, with a poster frame taken from the video itself.</li>
+            <li>A single file can be at most 25 MiB. The old 32.9 MB stock video was over that and would not have deployed. It has since been replaced with seven separate clips of Tangmere's own footage (2.4&ndash;3.5 MB each), all comfortably under the limit &mdash; confirmed working, since the site is already deployed and rendering correctly on Cloudflare Pages.</li>
             <li>Cloudflare's CDN terms let it limit customers who serve video or a large share of big files without paid services. A short looping clip of a few MB is unlikely to count, but it is another reason to keep the video small.</li>
           </ul>
           <p class="phase__note">Netlify was the earlier choice. Its free plan turned out to be 300 credits a month with a hard stop: each publish costs 15 credits, bandwidth costs 20 credits per GB, and running out pauses every site on the account. Its free, ready made form handling is the one thing given up.</p>
@@ -437,7 +437,7 @@
         </tbody>
       </table>
     </div>
-    <p class="phase__note" style="max-width:none">The single stock hero video has been replaced with a multi clip reel (Falcon 2000LXS cabin and engine, Bell 429 from several angles). To confirm and record here: is this Tangmere's own filmed footage now, or a newer stock reel standing in until real footage exists?</p>
+    <p class="phase__note" style="max-width:none">The single stock hero video has been replaced with a multi clip reel of Tangmere's own footage (Falcon 2000LXS cabin and engine, Bell 429 from several angles), confirmed 2026-09-25. The earlier stock footage caveat no longer applies.</p>
   </section>
 
   <section>
@@ -527,7 +527,7 @@
     <div class="phase" style="grid-template-columns:1fr; border-left-color:var(--slate)">
       <div class="phase__body">
         <div class="phase__title"><h3 style="font-size:1.05rem">Optional: offloading media to Google Cloud Storage</h3><span class="pill pill--ok">Not required to launch</span></div>
-        <p>Today's entire media footprint is <b>32.9&nbsp;MB</b> &mdash; almost all of it the placeholder stock hero video. That figure is a snapshot of today's stand in content, not a stable number: once Tangmere's own footage and photography replace it, the real footprint could land smaller or larger depending on what's actually shot. That's small enough to sit inside GCS's Always Free allowance either way at this scale, but it's also small enough that git tracks it forever: every time the hero video gets swapped, the repository grows by the full file size again, not just the difference. Moving large media out of the repository and into Cloud Storage &mdash; referenced by URL rather than committed &mdash; fixes that permanently, regardless of how the footprint changes later.</p>
+        <p>The old single stock hero video (32.9&nbsp;MB) has been replaced with seven clips of Tangmere's own footage, totalling about 20&nbsp;MB. That's small enough to sit inside GCS's Always Free allowance either way at this scale, but it's also small enough that git tracks it forever: every time hero footage gets swapped, the repository grows by the full file size again, not just the difference. Moving large media out of the repository and into Cloud Storage &mdash; referenced by URL rather than committed &mdash; fixes that permanently, regardless of how the footprint changes later.</p>
         <div class="scroll">
           <table>
             <thead><tr><th>Cost driver</th><th class="num">Typical range</th><th>Notes</th></tr></thead>
@@ -537,7 +537,7 @@
             </tbody>
           </table>
         </div>
-        <p class="phase__note" style="max-width:none">Worth noting: Cloudflare Pages (chosen for hosting) has no bandwidth cap, but it limits any single file to 25 MiB, so the hero video has to be compressed to roughly 3 to 6 MB to be hosted with the site at all. GCS only earns its place here as the fix for the git bloat problem above, or if media ever outgrows that per file limit &mdash; not as a second hosting bill.</p>
+        <p class="phase__note" style="max-width:none">Worth noting: Cloudflare Pages (chosen for hosting) has no bandwidth cap, but it limits any single file to 25 MiB. Each hero clip is already well under that. GCS only earns its place here as the fix for the git bloat problem above, or if media ever outgrows that per file limit &mdash; not as a second hosting bill.</p>
       </div>
     </div>
   </section>

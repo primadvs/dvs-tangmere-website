@@ -43,7 +43,7 @@ This is documented in detail in §7 and §9. Fixing it is the top priority of th
 |---|---|
 | **Live site** | [primadvs.github.io/dvs-tangmere-website](https://primadvs.github.io/dvs-tangmere-website/) — public, works, free |
 | **All 11 pages** | Load correctly: homepage, fleet listing, about, 8 aircraft detail pages |
-| **Hero video, photos, styling** | All working as designed. The hero video changed since the last check — see §9 |
+| **Hero video, photos, styling** | All working as designed. The hero video is now Tangmere's own footage, not stock — see §9 |
 | **Contact form** | **Does not send anywhere** — see §3 |
 | **WhatsApp button** | Works — opens WhatsApp with a pre filled message |
 | **Language switcher** | Visible in the header but does nothing when clicked — no translations exist. |
@@ -158,7 +158,7 @@ Still to do (once resumed):
 - Every page, every link, every image
 - A real test enquiry, checked by each employee in their own new mailbox
 - The WhatsApp button, on both a phone and a computer
-- The hero video, whichever it turns out to be (see §9), on both a phone and a computer.
+- The new hero video reel, Tangmere's own footage (see §9), on both a phone and a computer.
 
 ### Phase 5 — A slow rollout, not a switch flip (Weeks 4–6)
 
@@ -206,7 +206,7 @@ Everything in §7 is the confirmed plan. These three items are the only things s
 | Issue | Detail | Urgency |
 |---|---|---|
 | **Contact form doesn't send** | See §3. The single blocker before real traffic should be sent to this site. | Fix before launch |
-| **Hero video** | Updated since the last check: the single Pexels stock clip has been replaced with a multi clip reel (Falcon 2000LXS cabin and engine, Bell 429 from several angles). **Needs confirming: is this Tangmere's own filmed footage now, or a newer stock reel standing in until real footage exists?** | Confirm and update this row |
+| **Hero video is now Tangmere's own footage** | **Confirmed 2026-09-25.** The single Pexels stock clip has been replaced with a multi clip reel of Tangmere's own aircraft (Falcon 2000LXS cabin and engine, Bell 429 from several angles). The earlier stock footage caveat throughout this document no longer applies. | Resolved |
 | **2014 Bell 429 has no photos** | Shows a placeholder logo instead of the aircraft, since it hasn't arrived into inventory yet. | Fix when it arrives |
 | **2027 Bell 429 photo isn't the real aircraft** | It's Bell's own manufacturer photo, since this is a new build aircraft that doesn't exist yet. Reasonable for now, but not genuinely Tangmere's. | Fix at delivery |
 
@@ -245,7 +245,7 @@ Done:
 
 ### A related idea that was set aside: Google Cloud Storage
 
-Separately, moving the website's large files (the hero video clips) out of the GitHub repository and into a dedicated storage service (Google Cloud Storage) was discussed. This is **not required to launch** — it solves a narrower problem: every time a video file changes, git keeps the old version forever, so the repository slowly grows. The old 32.9 MB single stock video has since been replaced with seven clips totalling about 20 MB (see §9); the real footprint could still change again once it's confirmed whether these are Tangmere's own footage or a further placeholder. Storage cost for Tangmere's current files would be $0/month, comfortably inside a free allowance regardless; the real cost is "egress" (bandwidth for serving video to visitors), roughly $4–40/month depending on how many people visit. Worth revisiting only if the repository's size becomes a real nuisance, not before.
+Separately, moving the website's large files (the hero video clips) out of the GitHub repository and into a dedicated storage service (Google Cloud Storage) was discussed. This is **not required to launch** — it solves a narrower problem: every time a video file changes, git keeps the old version forever, so the repository slowly grows. The old 32.9 MB single stock video has since been replaced with seven clips of Tangmere's own footage, totalling about 20 MB (see §9). Storage cost for Tangmere's current files would be $0/month, comfortably inside a free allowance regardless; the real cost is "egress" (bandwidth for serving video to visitors), roughly $4–40/month depending on how many people visit. Worth revisiting only if the repository's size becomes a real nuisance, not before.
 
 ---
 
