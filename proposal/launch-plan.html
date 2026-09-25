@@ -383,8 +383,9 @@
       <article class="phase">
         <div class="phase__when">Hosting</div>
         <div class="phase__body">
-          <div class="phase__title"><h3>Cloudflare Pages</h3><span class="pill pill--ok">Chosen</span></div>
+          <div class="phase__title"><h3>Cloudflare Pages</h3><span class="pill pill--ok">Connected</span></div>
           <p>The site moves off GitHub Pages, which has no way to run a form and whose terms say it isn't meant for running an online business. Cloudflare's free plan has unlimited bandwidth, 500 builds a month and needs no card. It builds the site straight from the GitHub repository, so GitHub stays the master copy.</p>
+          <p class="phase__note">Done: connected to the GitHub repository and deployed, checked and rendering correctly at <code>dvs-tangmere-website.pages.dev</code>. This is a free preview address only &mdash; <code>tangmere.aero</code> does not point at it yet, so nothing has changed for real site visitors. Every future push to GitHub rebuilds this preview automatically.</p>
           <ul>
             <li>The terms don't ban business use. A free site can't collect card details, and Tangmere's site takes none.</li>
             <li>Free services carry no liability and Cloudflare may suspend an account at any time, so the site can be redeployed to another host within minutes if that ever happens.</li>

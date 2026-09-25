@@ -116,6 +116,7 @@ Done:
 - DKIM record published and authentication started in Google (can take up to 48 hours).
 - A first test email from the new address landed in iCloud's junk folder. That is expected for a brand new domain before DKIM is active. Retest once Google shows DKIM as working.
 - Two mailboxes created in Google Workspace: `chris@tangmere.aero` (Chris Edwards) and `craig@tangmere.aero` (Craig Lammiman).
+- **Cloudflare Pages connected to the GitHub repository, live at `dvs-tangmere-website.pages.dev`.** Checked and confirmed rendering correctly (hero, fleet cards, contact form all load). This is a free preview address only — `tangmere.aero` still points nowhere near it yet, so nothing changed for real site visitors. That switch is a deliberate later step (see Phase 3 below).
 
 **Still paused as of 2026-09-24: email is deliberately not being pushed forward.** Google's DKIM page is still showing "Authenticating email with DKIM" (checked 2026-09-23). The TXT record it is waiting on was confirmed live in Cloudflare's DNS, so nothing is misconfigured — this is simply Google's normal checking window (up to 48 hours from when it was published on 2026-09-21). Pick back up once it shows as authenticated.
 
