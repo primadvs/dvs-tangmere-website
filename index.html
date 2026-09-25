@@ -78,19 +78,19 @@
 
   <!-- HERO -->
   <section class="hero">
-    <!-- Eight clips, mixing jet and helicopter, that crossfade in order and loop.
+    <!-- Seven clips, mixing jet and helicopter, that crossfade in order and loop.
          Only the first loads with the page; each later one is fetched (from data-src)
          while the one before plays. Each poster is the clip's exact first frame, so
-         nothing flickers on swap. Engine first, overhead rotor second. -->
+         nothing flickers on swap. Engine first, overhead rotor second. data-fade sets a
+         slower dissolve into that slide (ms); the rest use 1.2s. -->
     <div class="hero__bg-wrap" id="heroReel" aria-hidden="true">
       <video class="hero__bg hero__slide is-active" src="assets/hero/2017-dassault-falcon-2000lxs-private-jet-engine.mp4" poster="assets/hero/2017-dassault-falcon-2000lxs-private-jet-engine.jpg" autoplay muted playsinline preload="auto"></video>
       <video class="hero__bg hero__slide" data-src="assets/hero/bell-429-helicopter-rotors-overhead.mp4" data-poster="assets/hero/bell-429-helicopter-rotors-overhead.jpg" muted playsinline preload="none"></video>
       <video class="hero__bg hero__slide" data-src="assets/hero/bell-429-helicopter-over-tower-bridge.mp4" data-poster="assets/hero/bell-429-helicopter-over-tower-bridge.jpg" muted playsinline preload="none"></video>
       <video class="hero__bg hero__slide" data-src="assets/hero/2017-dassault-falcon-2000lxs-private-jet-cabin.mp4" data-poster="assets/hero/2017-dassault-falcon-2000lxs-private-jet-cabin.jpg" muted playsinline preload="none"></video>
-      <video class="hero__bg hero__slide" data-src="assets/hero/bell-429-helicopter-cabin-details.mp4" data-poster="assets/hero/bell-429-helicopter-cabin-details.jpg" muted playsinline preload="none"></video>
-      <video class="hero__bg hero__slide" data-src="assets/hero/bell-429-helicopter-take-off.mp4" data-poster="assets/hero/bell-429-helicopter-take-off.jpg" muted playsinline preload="none"></video>
+      <video class="hero__bg hero__slide" data-fade="2400" data-src="assets/hero/bell-429-helicopter-hangar-and-seat.mp4" data-poster="assets/hero/bell-429-helicopter-hangar-and-seat.jpg" muted playsinline preload="none"></video>
+      <video class="hero__bg hero__slide" data-fade="2400" data-src="assets/hero/bell-429-helicopter-take-off.mp4" data-poster="assets/hero/bell-429-helicopter-take-off.jpg" muted playsinline preload="none"></video>
       <video class="hero__bg hero__slide" data-src="assets/hero/bell-429-helicopter-cabin-interior.mp4" data-poster="assets/hero/bell-429-helicopter-cabin-interior.jpg" muted playsinline preload="none"></video>
-      <video class="hero__bg hero__slide" data-src="assets/hero/bell-429-helicopter-private-estate.mp4" data-poster="assets/hero/bell-429-helicopter-private-estate.jpg" muted playsinline preload="none"></video>
     </div>
     <div class="hero__scrim" aria-hidden="true"></div>
 

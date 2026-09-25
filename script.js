@@ -2,6 +2,20 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// A refresh always starts at the top of the page. Left to itself the
+// browser restores the old scroll position (or re-follows a "#contact"
+// left in the URL by an in-page link) before the hero has its final
+// height, and lands near the footer. html has scroll-behavior: smooth,
+// so these jumps must ask for 'instant' or they animate instead.
+const navEntry = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+if (navEntry && navEntry.type === 'reload') {
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (window.location.hash) {
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+  }
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
 // A shared link that lands on a section (e.g. a link ending in
 // "#services") arrives with the hash already in the URL. The browser
 // tries to jump there immediately, before the hero video and other
@@ -11,7 +25,7 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 // finished loading.
 if (window.location.hash) {
   const sharedTargetId = window.location.hash.slice(1);
-  window.scrollTo(0, 0);
+  window.scrollTo({ top: 0, behavior: 'instant' });
   window.addEventListener('load', () => {
     const target = document.getElementById(sharedTargetId);
     if (target) {
@@ -62,6 +76,8 @@ const heroReel = document.getElementById('heroReel');
 if (heroReel) {
   const slides = [...heroReel.querySelectorAll('.hero__slide')];
   const FADE_MS = 1200; // matches .hero__slide.is-entering in styles.css
+  // A slide can ask for a slower dissolve into itself with data-fade="ms".
+  const fadeMs = (i) => Number(slides[i].dataset.fade) || FADE_MS;
 
   let current = 0;
   let inView = true;
@@ -108,6 +124,7 @@ if (heroReel) {
     clearTimeout(fade.timer);
     fade.to.classList.remove('is-entering');
     fade.to.classList.add('is-active');
+    fade.to.style.transitionDuration = '';
     fade.from.classList.remove('is-active');
     fade.from.pause();
     // Rewind now, while hidden, so it's ready at frame one when the film loops.
@@ -119,10 +136,12 @@ if (heroReel) {
     const next = (current + 1) % slides.length;
     const from = slides[current];
     const to = slides[next];
+    const ms = fadeMs(next);
     load(next);
+    to.style.transitionDuration = `${ms}ms`;
     to.classList.add('is-entering');
     current = next;
-    fade = { from, to, timer: setTimeout(finishFade, FADE_MS) };
+    fade = { from, to, timer: setTimeout(finishFade, ms) };
     syncPlayback();
     load((next + 1) % slides.length);
   };
@@ -131,7 +150,8 @@ if (heroReel) {
   // clip is still moving underneath while the new one fades in over it.
   const tick = () => {
     const v = slides[current];
-    if (!fade && v.duration && v.duration - v.currentTime <= FADE_MS / 1000) {
+    const next = (current + 1) % slides.length;
+    if (!fade && v.duration && v.duration - v.currentTime <= fadeMs(next) / 1000) {
       advance();
     }
     requestAnimationFrame(tick);
