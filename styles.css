@@ -372,6 +372,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   inset: 0;
   overflow: hidden;
   z-index: 0;
+  background: var(--ink);
 }
 .hero__bg {
   width: 100%;
@@ -379,6 +380,30 @@ ul { list-style: none; margin: 0; padding: 0; }
   object-fit: cover;
   display: block;
 }
+/* Clips stack. The incoming clip fades in on top while the outgoing one
+   stays fully opaque beneath it; fading both at once would dip through to
+   the page background halfway through every change. */
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  z-index: 0;
+}
+.hero__slide.is-active { opacity: 1; z-index: 1; }
+/* Where iOS/Safari refuses autoplay (Low Power Mode) it overlays its own
+   play glyph mid-hero, between the buttons. The film starts on the
+   visitor's first tap instead (script.js), so the glyph is never needed. */
+.hero__slide::-webkit-media-controls,
+.hero__slide::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
+}
+.hero__slide.is-entering {
+  opacity: 1;
+  z-index: 2;
+  transition: opacity 1.2s ease-in-out;
+}
+
 .hero__scrim {
   position: absolute;
   inset: 0;

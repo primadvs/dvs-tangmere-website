@@ -6,7 +6,7 @@
 <title>Tangmere Aircraft Sales: Business Jet &amp; Helicopter Brokerage, Guernsey</title>
 <meta name="description" content="Tangmere Aircraft Sales is a brokerage of working pilots based in Guernsey, handling business jet and helicopter transactions from consultation to delivery.">
 
-<link rel="icon" href="assets/tangmere-logo.png" type="image/png">
+<link rel="icon" href="assets/tangmere-aircraft-sales-logo.png" type="image/png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,8 +26,8 @@
     </nav>
 
     <a href="index.html" class="brand">
-      <img src="assets/tangmere-logo-light.png" alt="Tangmere Aircraft Sales emblem" class="brand__mark brand__mark--light">
-      <img src="assets/tangmere-logo.png" alt="Tangmere Aircraft Sales emblem" class="brand__mark brand__mark--dark">
+      <img src="assets/tangmere-aircraft-sales-logo-light.png" alt="Tangmere Aircraft Sales emblem" class="brand__mark brand__mark--light">
+      <img src="assets/tangmere-aircraft-sales-logo.png" alt="Tangmere Aircraft Sales emblem" class="brand__mark brand__mark--dark">
       <span class="brand__word">Tangmere</span>
     </a>
 
@@ -78,20 +78,19 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero__bg-wrap">
-      <video
-        class="hero__bg"
-        id="heroVideo"
-        poster="assets/hero-video-poster.jpg"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto"
-        aria-hidden="true"
-      >
-        <source src="assets/landing-page-video.mp4" type="video/mp4">
-      </video>
+    <!-- Seven clips, mixing jet and helicopter, that crossfade in order and loop.
+         Only the first loads with the page; each later one is fetched (from data-src)
+         while the one before plays. Each poster is the clip's exact first frame, so
+         nothing flickers on swap. Engine first, overhead rotor second. data-fade sets a
+         slower dissolve into that slide (ms); the rest use 1.2s. -->
+    <div class="hero__bg-wrap" id="heroReel" aria-hidden="true">
+      <video class="hero__bg hero__slide is-active" src="assets/hero/2017-dassault-falcon-2000lxs-private-jet-engine.mp4" poster="assets/hero/2017-dassault-falcon-2000lxs-private-jet-engine.jpg" autoplay muted playsinline preload="auto"></video>
+      <video class="hero__bg hero__slide" data-src="assets/hero/bell-429-helicopter-rotors-overhead.mp4" data-poster="assets/hero/bell-429-helicopter-rotors-overhead.jpg" muted playsinline preload="none"></video>
+      <video class="hero__bg hero__slide" data-src="assets/hero/bell-429-helicopter-over-tower-bridge.mp4" data-poster="assets/hero/bell-429-helicopter-over-tower-bridge.jpg" muted playsinline preload="none"></video>
+      <video class="hero__bg hero__slide" data-src="assets/hero/2017-dassault-falcon-2000lxs-private-jet-cabin.mp4" data-poster="assets/hero/2017-dassault-falcon-2000lxs-private-jet-cabin.jpg" muted playsinline preload="none"></video>
+      <video class="hero__bg hero__slide" data-fade="2400" data-src="assets/hero/bell-429-helicopter-hangar-and-seat.mp4" data-poster="assets/hero/bell-429-helicopter-hangar-and-seat.jpg" muted playsinline preload="none"></video>
+      <video class="hero__bg hero__slide" data-fade="2400" data-src="assets/hero/bell-429-helicopter-take-off.mp4" data-poster="assets/hero/bell-429-helicopter-take-off.jpg" muted playsinline preload="none"></video>
+      <video class="hero__bg hero__slide" data-src="assets/hero/bell-429-helicopter-cabin-interior.mp4" data-poster="assets/hero/bell-429-helicopter-cabin-interior.jpg" muted playsinline preload="none"></video>
     </div>
     <div class="hero__scrim" aria-hidden="true"></div>
 
@@ -115,7 +114,7 @@
 
     <a href="#available" class="hero__foot" aria-label="Scroll to learn more about Tangmere">
       <span class="hero__stamp">
-        <img src="assets/tangmere-logo-light.png" alt="">
+        <img src="assets/tangmere-aircraft-sales-logo-light.png" alt="">
         <span>Tangmere</span>
       </span>
       <span class="hero__scroll-cue" aria-hidden="true"></span>
@@ -132,7 +131,7 @@
     <div class="fleet__grid fleet__grid--teaser">
       <article class="fleet-card">
         <a href="fleet/2012-dassault-falcon-7x.html" class="fleet-card__media">
-          <img src="assets/falcon-7x.webp" alt="2012 Dassault Falcon 7X">
+          <img src="assets/2012-dassault-falcon-7x.webp" alt="2012 Dassault Falcon 7X">
           <span class="status status--available fleet-card__status">Available</span>
         </a>
         <div class="fleet-card__body">
@@ -144,7 +143,7 @@
 
       <article class="fleet-card">
         <a href="fleet/2022-king-air-260.html" class="fleet-card__media">
-          <img src="assets/king-air-260.webp" alt="2022 Beechcraft King Air 260">
+          <img src="assets/2022-beechcraft-king-air-260.webp" alt="2022 Beechcraft King Air 260">
           <span class="status status--available fleet-card__status">Available</span>
         </a>
         <div class="fleet-card__body">
@@ -156,7 +155,7 @@
 
       <article class="fleet-card">
         <a href="fleet/2019-embraer-phenom-300e.html" class="fleet-card__media">
-          <img src="assets/phenom-300e.webp" alt="2019 Embraer Phenom 300E">
+          <img src="assets/2019-embraer-phenom-300e.webp" alt="2019 Embraer Phenom 300E">
           <span class="status status--available fleet-card__status">Available</span>
         </a>
         <div class="fleet-card__body">
@@ -276,7 +275,7 @@
   <div class="site-footer__inner">
     <div class="site-footer__top">
       <a href="index.html" class="brand brand--footer">
-        <img src="assets/tangmere-logo-light.png" alt="Tangmere Aircraft Sales emblem" class="brand__mark">
+        <img src="assets/tangmere-aircraft-sales-logo-light.png" alt="Tangmere Aircraft Sales emblem" class="brand__mark">
         <span class="brand__word">Tangmere<br><em>Aircraft Sales</em></span>
       </a>
       <p class="site-footer__tagline">The Ultimate Ownership Experience.</p>
@@ -295,11 +294,11 @@
     </div>
   </div>
   <div class="site-footer__mark">
-    <img src="assets/tangmere-logo-light.png" alt="Tangmere Aircraft Sales emblem">
+    <img src="assets/tangmere-aircraft-sales-logo-light.png" alt="Tangmere Aircraft Sales emblem">
   </div>
   <div class="site-footer__bottom">
     <span>&copy; <span id="year"></span> Tangmere Aircraft Sales Ltd. Norman House, South Esplanade, Guernsey GY1 1AN.</span>
-    <img src="assets/bell-partnership .webp" alt="Bell Independent Representative" class="site-footer__badge">
+    <img src="assets/bell-independent-representative-badge.webp" alt="Bell Independent Representative" class="site-footer__badge">
   </div>
 </footer>
 
